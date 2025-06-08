@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAAP Commerce</title>
+  <style>
+    :root {
+      --pink: #ffd6ff;
+      --lavender: #e7c6ff;
+      --light-purple: #c8b6ff;
+      --soft-blue: #b8c0ff;
+      --pale-blue: #bbd0ff;
+      --text-dark: #333;
+      --highlight: #5e548e;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--pink);
+      color: var(--text-dark);
+    }
+
+    header {
+      background-color: var(--light-purple);
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--highlight);
+    }
+
+    header p {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    section {
+      padding: 30px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--highlight);
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      background-color: var(--pale-blue);
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      width: 260px;
+      padding: 16px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      color: var(--highlight);
+      margin: 8px 0;
+    }
+
+    .product-card p {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .product-card a {
+      display: inline-block;
+      padding: 10px 16px;
+      background-color: #25D366;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .product-card a:hover {
+      background-color: #1ebd56;
+    }
+
+    /* Future expandable sections */
+    .empty-section {
+      margin-top: 40px;
+      padding: 30px;
+      background-color: var(--lavender);
+      border-radius: 12px;
+      text-align: center;
+      color: #555;
+    }
+
+    .empty-section h3 {
+      margin-bottom: 10px;
+      color: var(--highlight);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>KAAP Commerce</h1>
+    <p>Illuminate Your Path to Success ✨</p>
+  </header>
+
+  <section class="tagline">
+    💡 Empowering Entrepreneurs — One Idea at a Time.
+  </section>
+
+  <section>
+    <h2 class="section-title">About Us</h2>
+    <p>
+      Kaap Commerce is a dynamic startup founded by four visionary friends who share a passion for innovation and commerce.
+      Our mission is to revolutionize the way businesses operate by providing cutting-edge solutions, fostering growth, and empowering entrepreneurs.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Vision</h2>
+    <p>
+      Our vision is to become a leading force in the commerce industry, driving positive change and delivering exceptional value to our clients.
+      We strive to create a platform that bridges gaps, sparks opportunities, and illuminates paths to success.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Motto</h2>
+    <p>"Illuminate Your Path to Success"</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Featured Products</h2>
+    <div class="products-container">
+      <div class="product-card">
+        <img src="https://i.imgur.com/tJHtPoX.jpeg" alt="Alphabet Resin Keychain" />
+        <h3>Alphabet Resin Keychain</h3>
+        <p>Price: ₹250</p>
+        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Alphabet%20Resin%20Keychain%20(₹250)%20from%20KAPA%20Commerce.%20Image:%20https://i.imgur.com/tJHtPoX.jpeg" target="_blank">I'm Interested</a>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.imgur.com/xxldcJU.jpeg" alt="Varmala Preservation Frame" />
+        <h3>Varmala Preservation Frame</h3>
+        <p>Price: ₹1899</p>
+        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Varmala%20Preservation%20Frame%20(₹1899)%20from%20KAPA%20Commerce.%20Image:%20https://i.imgur.com/xxldcJU.jpeg" target="_blank">I'm Interested</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empty sections for future use -->
+  <section class="empty-section">
+    <h3>✨ Upcoming: Our Team</h3>
+    <p>Meet the brains behind KAAP Commerce. Coming soon!</p>
+  </section>
+
+  <section class="empty-section">
+    <h3>💬 Testimonials</h3>
+    <p>Hear what our happy customers have to say.</p>
+  </section>
+
+  <section class="empty-section">
+    <h3>📦 How It Works</h3>
+    <p>Learn about our process and services.</p>
+  </section>
+
+</body>
+</html>
