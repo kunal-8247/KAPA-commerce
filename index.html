@@ -1,3 +1,12 @@
+To integrate the landing page functionality into your provided HTML code without merging it with the main body of the website, we can follow these steps:
+
+1. **Create a separate landing page section.**
+2. **Add a button to show the main content when clicked.**
+3. **Use JavaScript to toggle visibility.**
+
+Here’s the complete integrated code:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,6 +47,47 @@
       font-style: italic;
       font-size: 1.1rem;
       color: #555;
+    }
+
+    .landing-container {
+      background-color: #ffffff; /* White background for the container */
+      border-radius: 15px; /* Rounded corners */
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+      z-index: 1; /* Ensure it appears above the circle */
+      max-width: 600px; /* Max width for better layout */
+      text-align: center; /* Center text */
+      display: flex; /* Flex to center the elements */
+      flex-direction: column; /* Vertical layout */
+      align-items: center; /* Center items */
+      margin: auto; /* Center the landing container */
+      position: relative; /* Positioning context */
+      top: 50%; /* Center vertically */
+      transform: translateY(-50%); /* Adjust for centering */
+    }
+
+    .shop-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #ff6f61; /* Coral color for the button */
+      color: white; /* White text */
+      text-decoration: none;
+      border-radius: 25px; /* Rounded button */
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    }
+
+    .shop-button:hover {
+      background-color: #e55b51; /* Darker coral on hover */
+      transform: scale(1.05); /* Slightly enlarge the button */
+    }
+
+    #main-content {
+      display: none; /* Initially hidden */
+      padding: 30px 20px;
+      max-width: 900px;
+      margin: auto;
     }
 
     section {
@@ -146,76 +196,45 @@
     <p>Illuminate Your Path to Success ✨</p>
   </header>
 
-  <section class="tagline">
-    💡 Empowering Entrepreneurs — One Idea at a Time.
-  </section>
+  <div class="landing-container" id="landing-page">
+    <h2>Best for Buying Gifts for Your Loved Ones</h2>
+    <p>Explore our unique handmade items that express love and thoughtfulness.</p>
+    <p>Make every occasion special with personalized gifts!</p>
+    <a href="javascript:void(0);" class="shop-button" onclick="showMainContent()">Shop Now</a>
+  </div>
 
-  <section>
-    <h2 class="section-title">Featured Products</h2>
-    <p class="byline">Art by Raj Nandini & KAAP Commerce</p>
-    <div class="products-container">
-      <div class="product-card">
-        <img src="images/Keychain1.jpg" alt="Alphabet Resin Keychain" />
-        <h3>Alphabet Resin Keychain</h3>
-        <p>Price: ₹249</p>
-        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Alphabet%20Resin%20Keychain%20(₹249)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/Keychain1.jpg" target="_blank">I'm Interested</a>
-      </div>
+  <div id="main-content">
+    <section class="tagline">
+      💡 Empowering Entrepreneurs — One Idea at a Time.
+    </section>
 
-      <div class="product-card">
-        <img src="image/varmala1.jpg" alt="Varmala Preservation Frame 10 inches" />
-        <h3>Varmala Preservation Frame 10 inches</h3>
-        <p>Price: ₹3999</p>
-        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Varmala%20Preservation%20Frame%2010%20inches%20(₹3999)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/varmala1.jpg" target="_blank">I'm Interested</a>
-      </div>
+    <section>
+      <h2 class="section-title">Featured Products</h2>
+      <p class="byline">Art by Raj Nandini & KAAP Commerce</p>
+      <div class="products-container">
+        <div class="product-card">
+          <img src="images/Keychain1.jpg" alt="Alphabet Resin Keychain" />
+          <h3>Alphabet Resin Keychain</h3>
+          <p>Price: ₹249</p>
+          <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Alphabet%20Resin%20Keychain%20(₹249)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/Keychain1.jpg" target="_blank">I'm Interested</a>
+        </div>
 
-      <div class="product-card">
-        <img src="images/alphabet pendant1.jpg" alt="Alphabet Pendant" />
-        <h3>Alphabet Pendant</h3>
-        <p>Price: ₹199</p>
-        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Alphabet%20Pendant%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/alphabet%20pendant1.jpg" target="_blank">I'm Interested</a>
-      </div>
+        <div class="product-card">
+          <img src="image/varmala1.jpg" alt="Varmala Preservation Frame 10 inches" />
+          <h3>Varmala Preservation Frame 10 inches</h3>
+          <p>Price: ₹3999</p>
+          <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Varmala%20Preservation%20Frame%2010%20inches%20(₹3999)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/varmala1.jpg" target="_blank">I'm Interested</a>
+        </div>
 
-      <div class="product-card">
-        <img src="images/bookmarks.jpg" alt="Customized Bookmarks" />
-        <h3>Customized Bookmarks</h3>
-        <p>Price: ₹199</p>
-        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Customized%20Bookmarks%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/bookmarks.jpg" target="_blank">I'm Interested</a>
-      </div>
+        <div class="product-card">
+          <img src="images/alphabet pendant1.jpg" alt="Alphabet Pendant" />
+          <h3>Alphabet Pendant</h3>
+          <p>Price: ₹199</p>
+          <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Alphabet%20Pendant%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/alphabet%20pendant1.jpg" target="_blank">I'm Interested</a>
+        </div>
 
-      <div class="product-card">
-        <img src="images/car stand and hangings.jpg" alt="Car Stand and Hangings" />
-        <h3>Car Stand and Hangings</h3>
-        <p>Price: ₹199</p>
-        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Car%20Stand%20and%20Hangings%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/car%20stand%20and%20hangings.jpg" target="_blank">I'm Interested</a>
-      </div>
-
-      <div class="product-card">
-        <img src="images/customized earsings1.jpg" alt="Customized Earrings" />
-        <h3>Customized Earrings</h3>
-        <p>Price: ₹120</p>
-        <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Customized%20Earrings%20(₹120)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/customized%20earrings1.jpg" target="_blank">I'm Interested</a>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <br><br><br>
-    <h2 class="section-title">Upcoming Category</h2>
-    <p class="byline">Jewelry by Pravallika & KAAP Commerce</p>
-    <div class="empty-section">
-      <p>More amazing pieces coming soon. Stay tuned!</p>
-    </div>
-  </section>
-
-  <section class="empty-section">
-    <h3>✨ Our Team</h3>
-    <p>Meet the brains behind KAAP Commerce. Coming soon!</p>
-  </section>
-
-  <section class="empty-section">
-    <h3>💬 Testimonials</h3>
-    <p>Hear what our happy customers have to say.</p>
-  </section>
-
-  <section>
-    <h2 class="section-title">About Us</
+        <div class="product-card">
+          <img src="images/bookmarks.jpg" alt="Customized Bookmarks" />
+          <h3>Customized Bookmarks</h3>
+          <p>Price: ₹199</p>
+          <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Customized%20Bookmarks%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/bookmarks.jpg" target="_blank">
