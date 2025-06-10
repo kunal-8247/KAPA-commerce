@@ -1,10 +1,4 @@
-To integrate the landing page functionality into your provided HTML code without merging it with the main body of the website, we can follow these steps:
-
-1. **Create a separate landing page section.**
-2. **Add a button to show the main content when clicked.**
-3. **Use JavaScript to toggle visibility.**
-
-Here’s the complete integrated code:
+To create a fully functional landing page along with the main content, I'll include both the landing page section and the main content in the HTML structure while ensuring that the landing page displays correctly before transitioning to the main content. Here’s the updated code:
 
 ```html
 <!DOCTYPE html>
@@ -50,37 +44,33 @@ Here’s the complete integrated code:
     }
 
     .landing-container {
-      background-color: #ffffff; /* White background for the container */
-      border-radius: 15px; /* Rounded corners */
+      background-color: #ffffff;
+      border-radius: 15px;
       padding: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Subtle shadow */
-      z-index: 1; /* Ensure it appears above the circle */
-      max-width: 600px; /* Max width for better layout */
-      text-align: center; /* Center text */
-      display: flex; /* Flex to center the elements */
-      flex-direction: column; /* Vertical layout */
-      align-items: center; /* Center items */
-      margin: auto; /* Center the landing container */
-      position: relative; /* Positioning context */
-      top: 50%; /* Center vertically */
-      transform: translateY(-50%); /* Adjust for centering */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      max-width: 600px;
+      text-align: center;
+      margin: auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .shop-button {
       display: inline-block;
       padding: 15px 30px;
-      background-color: #ff6f61; /* Coral color for the button */
-      color: white; /* White text */
+      background-color: #ff6f61;
+      color: white;
       text-decoration: none;
-      border-radius: 25px; /* Rounded button */
+      border-radius: 25px;
       font-weight: bold;
       margin-top: 20px;
-      transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
     .shop-button:hover {
-      background-color: #e55b51; /* Darker coral on hover */
-      transform: scale(1.05); /* Slightly enlarge the button */
+      background-color: #e55b51;
+      transform: scale(1.05);
     }
 
     #main-content {
@@ -188,6 +178,12 @@ Here’s the complete integrated code:
       color: var(--highlight);
     }
   </style>
+  <script>
+    function showMainContent() {
+      document.getElementById('landing-page').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    }
+  </script>
 </head>
 <body>
 
@@ -220,14 +216,14 @@ Here’s the complete integrated code:
         </div>
 
         <div class="product-card">
-          <img src="image/varmala1.jpg" alt="Varmala Preservation Frame 10 inches" />
+          <img src="images/varmala1.jpg" alt="Varmala Preservation Frame 10 inches" />
           <h3>Varmala Preservation Frame 10 inches</h3>
           <p>Price: ₹3999</p>
           <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Varmala%20Preservation%20Frame%2010%20inches%20(₹3999)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/varmala1.jpg" target="_blank">I'm Interested</a>
         </div>
 
         <div class="product-card">
-          <img src="images/alphabet pendant1.jpg" alt="Alphabet Pendant" />
+          <img src="images/alphabet_pendant1.jpg" alt="Alphabet Pendant" />
           <h3>Alphabet Pendant</h3>
           <p>Price: ₹199</p>
           <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Alphabet%20Pendant%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/alphabet%20pendant1.jpg" target="_blank">I'm Interested</a>
@@ -237,4 +233,12 @@ Here’s the complete integrated code:
           <img src="images/bookmarks.jpg" alt="Customized Bookmarks" />
           <h3>Customized Bookmarks</h3>
           <p>Price: ₹199</p>
-          <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Customized%20Bookmarks%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/bookmarks.jpg" target="_blank">
+          <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Customized%20Bookmarks%20(₹199)%20from%20KAPA%20Commerce.%20Image:%20https://kunal-8247.github.io/KAPA-commerce/images/bookmarks.jpg" target="_blank">I'm Interested</a>
+        </div>
+
+        <div class="product-card">
+          <img src="images/car_stand_and_hangings.jpg" alt="Car Stand and Hangings" />
+          <h3>Car Stand and Hangings</h3>
+          <p>Price: ₹199</p>
+          <a href="https://wa.me/918247316520?text=Hi!%20I'm%20interested%20in%20the%20Car%
+      
