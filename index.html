@@ -287,39 +287,78 @@
     &copy; 2025 KAAP Commerce. All rights reserved.
   </footer>
 
-  <script>
+  <!-- Product Catalog Container -->
+<div class="products-container"></div>
+
+<!-- Product Catalog Script -->
+<script>
   const products = [
     { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
     { name: "Alphabet Pendant", price: "₹199", image: "alphabet pendant1.jpg" },
     { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
     { name: "Car Stand and Hangings", price: "₹199", image: "car stand and hangings.jpg" },
-    { name: "customised ear-rings", price: "₹299", image: "customized earsings1.jpg" },
-    { name: "customised rings", price: "₹120", image: "flower ring1.jpg" }
+    { name: "Customised Ear-rings", price: "₹299", image: "customized earsings1.jpg" },
+    { name: "Customised Rings", price: "₹120", image: "flower ring1.jpg" }
   ];
 
   const container = document.querySelector(".products-container");
 
- const productId = `KA${(index + 1).toString().padStart(4, '0')}AP`;
-const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
-const waText = encodeURIComponent(
-  `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🆔 Product ID: *${productId}*\n🛍️ Name: *${p.name}*\n💰 Price: ₹${p.price}\n🖼️ Image: ${imageUrl}\n\nPlease let me know how to proceed.`
-);
-const el = `
-  <div class="product-card">
-    <img src="${imageUrl}" alt="${p.name}" />
-    <h3>${p.name}</h3>
-    <p>Price: ₹${p.price}</p>
-    <a class="whatsapp-button" target="_blank"
-      href="https://wa.me/918247316520?text=${waText}">
-      I'm Interested
-    </a>
-  </div>
-`;
+  products.forEach((p, index) => {
+    const productId = `KA${(index + 1).toString().padStart(4, '0')}AP`;
+    const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
+    const waText = encodeURIComponent(
+      `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🆔 Product ID: *${productId}*\n🛍️ Name: *${p.name}*\n💰 Price: ${p.price}\n🖼️ Image: ${imageUrl}\n\nPlease let me know how to proceed.`
+    );
+
+    const el = `
+      <div class="product-card">
+        <img src="${imageUrl}" alt="${p.name}" />
+        <h3>${p.name}</h3>
+        <p>Price: ${p.price}</p>
+        <a class="whatsapp-button" target="_blank"
+          href="https://wa.me/918247316520?text=${waText}">
+          I'm Interested
+        </a>
+      </div>
+    `;
 
     container.innerHTML += el;
   });
 </script>
 
+<!-- Optional Styling -->
+<style>
+  .products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+  .product-card {
+    width: 220px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    background-color: white;
+  }
+  .product-card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .whatsapp-button {
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #25d366;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+</style>
 </body>
 </html>
 
