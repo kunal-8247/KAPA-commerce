@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kunal-8247.github.io/KAPA-commerce/sitemap.xml
