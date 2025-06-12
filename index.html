@@ -5,18 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="KAAP Commerce offers personalized, handcrafted gifts perfect for every occasion." />
   <meta name="google-site-verification" content="oMOoPCP2rVTdlil-FA-hmLcm2ZgeMgjXBdIepu9C0Gg" />
-  <title>KAAP Commerce</title>
-  <!-- Your other styles or links -->
-</head>
-  <title>KAAP Commerce | Handmade Gifts & Jewelry for Loved Ones</title>
-<meta name="description" content="KAAP Commerce offers handcrafted resin jewelry, earrings, pendants, and custom gifts. The perfect site for gifting your loved ones." />
-
-
-</head>
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="KAAP Commerce offers personalized, handcrafted gifts perfect for every occasion." />
   <meta name="keywords" content="handmade gifts, resin keychains, personalized gifts, KAAP Commerce" />
   <meta name="author" content="KAAP Commerce Team" />
   <title>KAAP Commerce - Unique Handmade Gifts</title>
@@ -32,37 +20,43 @@
       --highlight: #5e548e;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: var(--pink);
       color: var(--text-dark);
+      scroll-behavior: smooth;
     }
 
     header {
       position: sticky;
       top: 0;
       background-color: var(--light-purple);
-      padding: 20px;
-      text-align: center;
+      padding: 10px 20px;
       z-index: 1000;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
+    .logo img {
+      height: 50px;
+    }
+
+    .nav-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .nav-links a:hover {
       color: var(--highlight);
-    }
-
-    header p {
-      font-style: italic;
-      font-size: 1.1rem;
-      color: #555;
     }
 
     #landing-page {
@@ -107,21 +101,14 @@
       transform: scale(1.05);
     }
 
-    #main-content {
-      display: none;
-      padding: 30px 20px;
-      max-width: 1200px;
-      margin: auto;
+    section {
+      padding: 40px 20px;
       animation: fadeIn 1s ease-in-out;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    section {
-      padding: 40px 20px;
     }
 
     .section-title {
@@ -225,74 +212,79 @@
       .product-card {
         width: 90%;
       }
+
+      .nav-links {
+        margin-top: 10px;
+        text-align: center;
+        width: 100%;
+      }
     }
   </style>
-  <script>
-    function showMainContent() {
-      document.getElementById('landing-page').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
-    }
-  </script>
 </head>
 <body>
 
   <header>
-    <h1>KAAP Commerce</h1>
-    <p>Illuminate Your Path to Success ✨</p>
+    <div class="logo">
+      <img src="images/kaap-logo.jpg" alt="KAAP Commerce Logo" />
+    </div>
+    <nav class="nav-links">
+      <a href="#landing-page">Home</a>
+      <a href="#products">Products</a>
+      <a href="#upcoming">Upcoming</a>
+      <a href="#about">About</a>
+      <a href="#vision">Vision</a>
+    </nav>
   </header>
 
-  <div id="landing-page">
+  <section id="landing-page">
     <h2>Best for Buying Gifts for Your Loved Ones</h2>
     <p>Explore our unique handmade items that express love and thoughtfulness.</p>
     <p>Make every occasion special with personalized gifts!</p>
-    <button class="shop-button" onclick="showMainContent()">Shop Now</button>
-  </div>
+    <a href="#products" class="shop-button">Shop Now</a>
+  </section>
 
-  <div id="main-content">
-    <section class="tagline">
-      💡 Empowering Entrepreneurs — One Idea at a Time.
-    </section>
+  <section class="tagline">
+    💡 Empowering Entrepreneurs — One Idea at a Time.
+  </section>
 
-    <section>
-      <h2 class="section-title">Featured Products</h2>
-      <p class="byline">Handcrafted by Raj nandini & KAAP Commerce</p>
-      <div class="products-container" id="products"></div>
-    </section>
+  <section id="products">
+    <h2 class="section-title">Featured Products</h2>
+    <p class="byline">Handcrafted by Raj nandini & KAAP Commerce</p>
+    <div class="products-container"></div>
+  </section>
 
-    <!-- ✅ Future Upcoming Section -->
-    <section>
-      <h2 class="section-title">Future Upcoming</h2>
-      <p class="byline">Jewellery by Pravallika</p>
-      <div class="products-container">
-        <div class="product-card coming-soon">
-          <img src="images/coming-soon.jpg" alt="Upcoming Jewellery Collection" loading="lazy" />
-          <h3>Coming Soon</h3>
-          <p>Explore elegant, handmade jewellery by Pravallika – launching soon!</p>
-        </div>
+  <section id="upcoming">
+    <h2 class="section-title">Future Upcoming</h2>
+    <p class="byline">Jewellery by Pravallika</p>
+    <div class="products-container">
+      <div class="product-card coming-soon">
+        <img src="images/coming-soon.jpg" alt="Upcoming Jewellery Collection" loading="lazy" />
+        <h3>Coming Soon</h3>
+        <p>Explore elegant, handmade jewellery by Pravallika – launching soon!</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section>
-      <h2 class="section-title">About Us</h2>
-      <p class="text-center">
-        KAAP Commerce is a young, passionate brand focused on providing unique, handcrafted gifts for every occasion.
-        Whether you're looking for personalized keychains or cute bookmarks, our products are made with love and care.
-      </p>
-    </section>
+  <section id="about">
+    <h2 class="section-title">About Us</h2>
+    <p class="text-center">
+      KAAP Commerce is a young, passionate brand focused on providing unique, handcrafted gifts for every occasion.
+      Whether you're looking for personalized keychains or cute bookmarks, our products are made with love and care.
+    </p>
+  </section>
 
-    <section>
-      <h2 class="section-title">Our Vision & Motto</h2>
-      <p class="text-center">
-        Our vision is to empower creativity and bring smiles through meaningful gifts.
-        <br />
-        <strong>Motto:</strong> “Create. Celebrate. Cherish.”
-      </p>
-    </section>
+  <section id="vision">
+    <h2 class="section-title">Our Vision & Motto</h2>
+    <p class="text-center">
+      Our vision is to empower creativity and bring smiles through meaningful gifts.
+      <br />
+      <strong>Motto:</strong> “Create. Celebrate. Cherish.”
+    </p>
+  </section>
 
-    <footer>
-      &copy; 2025 KAAP Commerce. All rights reserved.
-    </footer>
-  </div>
+  <footer>
+    &copy; 2025 KAAP Commerce. All rights reserved.
+  </footer>
 
   <script>
     const products = [
@@ -301,10 +293,10 @@
       { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
       { name: "Car Stand and Hangings", price: "₹199", image: "car stand and hangings.jpg" },
       { name: "customised ear-rings", price: "₹299", image: "customized earsings1.jpg" },
-      { name : "customised rings", price:"₹120", image: "flower ring1.jpg" }
+      { name: "customised rings", price: "₹120", image: "flower ring1.jpg" }
     ];
 
-    const container = document.getElementById("products");
+    const container = document.querySelector(".products-container");
 
     products.forEach(p => {
       const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
@@ -324,3 +316,4 @@
   </script>
 </body>
 </html>
+
