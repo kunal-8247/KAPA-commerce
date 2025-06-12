@@ -288,33 +288,36 @@
   </footer>
 
   <script>
-    const products = [
-      { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
-      { name: "Alphabet Pendant", price: "₹199", image: "alphabet pendant1.jpg" },
-      { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
-      { name: "Car Stand and Hangings", price: "₹199", image: "car stand and hangings.jpg" },
-      { name: "customised ear-rings", price: "₹299", image: "customized earsings1.jpg" },
-      { name: "customised rings", price: "₹120", image: "flower ring1.jpg" }
-    ];
+  const products = [
+    { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
+    { name: "Alphabet Pendant", price: "₹199", image: "alphabet pendant1.jpg" },
+    { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
+    { name: "Car Stand and Hangings", price: "₹199", image: "car stand and hangings.jpg" },
+    { name: "customised ear-rings", price: "₹299", image: "customized earsings1.jpg" },
+    { name: "customised rings", price: "₹120", image: "flower ring1.jpg" }
+  ];
 
-    const container = document.querySelector(".products-container");
+  const container = document.querySelector(".products-container");
 
-    products.forEach(p => {
-      const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
-      const waText = encodeURIComponent(
-        `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🛍️ *${p.name}*\n💰 Price: ${p.price}\n🖼️ Image: ${imageUrl}\n\nPlease let me know how to proceed.`
-      );
-      const el = `
-        <div class="product-card">
-          <img src="images/${p.image}" alt="${p.name}" loading="lazy" />
-          <h3>${p.name}</h3>
-          <p>Price: ${p.price}</p>
-          <a href="https://wa.me/918977659800?text=${waText}" target="_blank">I'm Interested</a>
-        </div>
-      `;
-      container.innerHTML += el;
-    });
-  </script>
+  products.forEach((p, index) => {
+    const productId = `KA${(index + 1).toString().padStart(4, '0')}AP`;
+    const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
+    const waText = encodeURIComponent(
+      `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🆔 Product ID: *${productId}*\n🛍️ Name: *${p.name}*\n💰 Price: ${p.price}\n🖼️ Image: ${imageUrl}\n\nPlease let me know how to proceed.`
+    );
+    const el = `
+      <div class="product-card">
+        <img src="images/${p.image}" alt="${p.name}" loading="lazy" />
+        <h3>${p.name}</h3>
+        <p>Product ID: <strong>${productId}</strong></p>
+        <p>Price: ${p.price}</p>
+        <a href="https://wa.me/918977659800?text=${waText}" target="_blank">I'm Interested</a>
+      </div>
+    `;
+    container.innerHTML += el;
+  });
+</script>
+
 </body>
 </html>
 
