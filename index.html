@@ -360,28 +360,37 @@
   }
 
   formEl.addEventListener("submit", async function (e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const name = document.getElementById("custName").value.trim();
-    const address = document.getElementById("custAddress").value.trim();
-    const email = document.getElementById("custEmail").value.trim();
-    const phone = document.getElementById("custPhone").value.trim();
-    const product = JSON.parse(document.getElementById("productInfo").value);
+  const name = document.getElementById("custName").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+  const email = document.getElementById("custEmail").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const product = JSON.parse(document.getElementById("productInfo").value);
 
-    // ✅ 1. Send to Google Sheets with all required data
-    fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        address,
-        email,
-        phone,
-        productId: product.id,
-        productName: product.name
-      })
-    });
+  // ✅ 1. Send only buyer info + product ID to Google Sheet
+  fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name,
+      address,
+      email,
+      phone,
+      productId: product.id, // from dataset
+      productName: product.name
+    })
+  });
+
+  // ✅ 2. WhatsApp message should include ONLY product info
+  const message = `Hello! I'm interested in this product:%0A%0A🆔 *Product ID*: ${product.id}%0A📦 *Name*: ${product.name}%0A💰 *Price*: ${product.price}%0A🖼️ *Image*: ${product.image}`;
+  const whatsappLink = `https://wa.me/91${phone}?text=${message}`;
+
+  closeForm();
+  window.location.href = whatsappLink;
+});
+
 
     // ✅ 2. Redirect to WhatsApp with only product info
     const message = `Hello! I'm interested in this product:%0A%0A🆔 *Product ID*: ${product.id}%0A📦 *Name*: ${product.name}%0A💰 *Price*: ${product.price}%0A🖼️ *Image*: ${product.image}`;
