@@ -338,57 +338,60 @@
   </div>
 
   <script>
-    const formEl = document.getElementById("interestForm");
-    const popup = document.getElementById("popupForm");
-    let currentProduct = null;
+  const formEl = document.getElementById("interestForm");
+  const popup = document.getElementById("popupForm");
+  let currentProduct = null;
 
-    document.querySelectorAll(".products-container").forEach(container => {
-      container.addEventListener("click", function (e) {
-        const btn = e.target.closest(".whatsapp-button");
-        if (btn) {
-          e.preventDefault();
-          currentProduct = btn.dataset;
-          document.getElementById("productInfo").value = JSON.stringify(currentProduct);
-          popup.style.display = "flex";
-        }
-      });
+  document.querySelectorAll(".products-container").forEach(container => {
+    container.addEventListener("click", function (e) {
+      const btn = e.target.closest(".whatsapp-button");
+      if (btn) {
+        e.preventDefault();
+        currentProduct = btn.dataset;
+        document.getElementById("productInfo").value = JSON.stringify(currentProduct);
+        popup.style.display = "flex";
+      }
+    });
+  });
+
+  function closeForm() {
+    popup.style.display = "none";
+    formEl.reset();
+  }
+
+  formEl.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("custName").value.trim();
+    const address = document.getElementById("custAddress").value.trim();
+    const email = document.getElementById("custEmail").value.trim();
+    const phone = document.getElementById("custPhone").value.trim();
+    const product = JSON.parse(document.getElementById("productInfo").value);
+
+    // ✅ 1. Send to Google Sheets with all required data
+    fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        address,
+        email,
+        phone,
+        productId: product.id,
+        productName: product.name
+      })
     });
 
-    function closeForm() {
-      popup.style.display = "none";
-      formEl.reset();
-    }
+    // ✅ 2. Redirect to WhatsApp with only product info
+    const message = `Hello! I'm interested in this product:%0A%0A🆔 *Product ID*: ${product.id}%0A📦 *Name*: ${product.name}%0A💰 *Price*: ${product.price}%0A🖼️ *Image*: ${product.image}`;
+    const whatsappLink = `https://wa.me/91${phone}?text=${message}`;
 
-    formEl.addEventListener("submit", async function (e) {
-      e.preventDefault();
+    closeForm();
+    window.location.href = whatsappLink;
+  });
+</script>
 
-      const name = document.getElementById("custName").value.trim();
-      const address = document.getElementById("custAddress").value.trim();
-      const email = document.getElementById("custEmail").value.trim();
-      const phone = document.getElementById("custPhone").value.trim();
-      const product = JSON.parse(document.getElementById("productInfo").value);
-
-      fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          address,
-          email,
-          phone,
-          productId: product.id,
-          productName: product.name
-        })
-      });
-
-      const waMsg = `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🄁 Product ID: *${product.id}*\n🏣️ Name: *${product.name}*\n💰 Price: ${product.price}\n🖼️ Image: ${product.image}\n\n👤 Name: ${name}\n🏡 Address: ${address}\n📧 Email: ${email}\n📱 WhatsApp: ${phone}`;
-
-      window.open(`https://wa.me/918977659800?text=${encodeURIComponent(waMsg)}`, "_blank");
-
-      closeForm();
-    });
-  </script>
 </body>
 </html>
 
