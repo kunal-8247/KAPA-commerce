@@ -10,215 +10,183 @@
   <title>KAAP Commerce - Unique Handmade Gifts</title>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <style>
-  :root {
-    --pink: #ffd6ff;
-    --lavender: #e7c6ff;
-    --light-purple: #c8b6ff;
-    --soft-blue: #b8c0ff;
-    --pale-blue: #bbd0ff;
-    --text-dark: #333;
-    --highlight: #5e548e;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--pink);
-    color: var(--text-dark);
-    scroll-behavior: smooth;
-  }
-
-  header {
-    position: sticky;
-    top: 0;
-    background-color: var(--light-purple);
-    padding: 10px 20px;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .logo img {
-    height: 50px;
-  }
-
-  .nav-links a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    font-size: 1rem;
-  }
-
-  .nav-links a:hover {
-    color: var(--highlight);
-  }
-
-  #landing-page {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color: #fff;
-    padding: 30px;
-  }
-
-  #landing-page h2 {
-    font-size: 2rem;
-    color: var(--highlight);
-    margin-bottom: 10px;
-  }
-
-  #landing-page p {
-    font-size: 1.1rem;
-    color: #555;
-    margin: 5px 0;
-  }
-
-  .shop-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 14px 28px;
-    font-size: 1rem;
-    background-color: #ff6f61;
-    color: #fff;
-    text-decoration: none;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .shop-button:hover {
-    background-color: #e55b51;
-    transform: scale(1.05);
-  }
-
-  section {
-    padding: 40px 20px;
-    animation: fadeIn 1s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .section-title {
-    font-size: 1.8rem;
-    color: var(--highlight);
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  .byline {
-    font-size: 0.95rem;
-    color: #666;
-    text-align: center;
-    margin-top: -10px;
-    margin-bottom: 20px;
-    font-style: italic;
-  }
-
-  .tagline {
-    background-color: var(--pale-blue);
-    padding: 15px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #444;
-    margin-bottom: 30px;
-  }
-
-  .products-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  .product-card {
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    width: 260px;
-    padding: 16px;
-    text-align: center;
-    transition: transform 0.2s ease;
-  }
-
-  .product-card:hover {
-    transform: translateY(-6px);
-  }
-
-  .product-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 12px;
-  }
-
-  .product-card h3 {
-    font-size: 1.2rem;
-    color: var(--highlight);
-    margin: 8px 0;
-  }
-
-  .product-card p {
-    font-size: 1rem;
-    margin-bottom: 12px;
-  }
-
-  .product-card a {
-    display: inline-block;
-    padding: 10px 16px;
-    background-color: #25D366;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-  }
-
-  .product-card a:hover {
-    background-color: #1ebd56;
-  }
-
-  .product-card.coming-soon {
-    opacity: 0.7;
-    filter: grayscale(0.3);
-  }
-
-  .text-center {
-    text-align: center;
-  }
-
-  footer {
-    text-align: center;
-    background-color: var(--light-purple);
-    color: #444;
-    padding: 20px;
-    margin-top: 40px;
-    font-size: 0.95rem;
-  }
-
-  @media (max-width: 768px) {
-    .product-card {
-      width: 90%;
+    :root {
+      --pink: #ffd6ff;
+      --lavender: #e7c6ff;
+      --light-purple: #c8b6ff;
+      --soft-blue: #b8c0ff;
+      --pale-blue: #bbd0ff;
+      --text-dark: #333;
+      --highlight: #5e548e;
     }
 
-    .nav-links {
-      margin-top: 10px;
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--pink);
+      color: var(--text-dark);
+      scroll-behavior: smooth;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--light-purple);
+      padding: 10px 20px;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    .nav-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--highlight);
+    }
+
+    #landing-page {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      width: 100%;
+      background-color: #fff;
+      padding: 30px;
     }
-  }
+
+    .shop-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      background-color: #ff6f61;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .shop-button:hover {
+      background-color: #e55b51;
+      transform: scale(1.05);
+    }
+
+    section {
+      padding: 40px 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: var(--highlight);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .byline {
+      font-size: 0.95rem;
+      color: #666;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      width: 260px;
+      padding: 16px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      color: var(--highlight);
+      margin: 8px 0;
+    }
+
+    .product-card a {
+      display: inline-block;
+      padding: 10px 16px;
+      background-color: #25D366;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .product-card a:hover {
+      background-color: #1ebd56;
+    }
+
+    .product-card.coming-soon {
+      opacity: 0.7;
+      filter: grayscale(0.3);
+    }
+
+    footer {
+      text-align: center;
+      background-color: var(--light-purple);
+      color: #444;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .product-card {
+        width: 90%;
+      }
+
+      .nav-links {
+        margin-top: 10px;
+        text-align: center;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -239,18 +207,13 @@
   <section id="landing-page">
     <h2>Best for Buying Gifts for Your Loved Ones</h2>
     <p>Explore our unique handmade items that express love and thoughtfulness.</p>
-    <p>Make every occasion special with personalized gifts!</p>
     <a href="#products" class="shop-button">Shop Now</a>
-  </section>
-
-  <section class="tagline">
-    💡 Empowering Entrepreneurs — One Idea at a Time.
   </section>
 
   <section id="products">
     <h2 class="section-title">Featured Products</h2>
     <p class="byline">Handcrafted by Raj nandini & KAAP Commerce</p>
-    <div class="products-container"></div>
+    <div class="products-container" id="productList"></div>
   </section>
 
   <section id="upcoming">
@@ -258,26 +221,24 @@
     <p class="byline">Jewellery by Pravallika</p>
     <div class="products-container">
       <div class="product-card coming-soon">
-        <img src="images/coming-soon.jpg" alt="Upcoming Jewellery Collection" loading="lazy" />
+        <img src="images/coming-soon.jpg" alt="Upcoming Jewellery Collection" />
         <h3>Coming Soon</h3>
-        <p>Explore elegant, handmade jewellery by Pravallika – launching soon!</p>
+        <p>Elegant handmade jewellery launching soon!</p>
       </div>
     </div>
   </section>
 
   <section id="about">
     <h2 class="section-title">About Us</h2>
-    <p class="text-center">
-      KAAP Commerce is a young, passionate brand focused on providing unique, handcrafted gifts for every occasion.
-      Whether you're looking for personalized keychains or cute bookmarks, our products are made with love and care.
+    <p style="text-align:center">
+      KAAP Commerce is a young, passionate brand providing unique, handcrafted gifts for all occasions.
     </p>
   </section>
 
   <section id="vision">
     <h2 class="section-title">Our Vision & Motto</h2>
-    <p class="text-center">
-      Our vision is to empower creativity and bring smiles through meaningful gifts.
-      <br />
+    <p style="text-align:center">
+      Our vision is to empower creativity and bring smiles through meaningful gifts. <br>
       <strong>Motto:</strong> “Create. Celebrate. Cherish.”
     </p>
   </section>
@@ -286,8 +247,7 @@
     &copy; 2025 KAAP Commerce. All rights reserved.
   </footer>
 
-  <div class="products-container"></div>
-
+  <!-- Dynamic Products -->
   <script>
     const products = [
       { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
@@ -298,102 +258,76 @@
       { name: "Customised Rings", price: "₹120", image: "flower_ring1.jpg" }
     ];
 
-    const container = document.querySelector(".products-container");
-
-    products.forEach((p, index) => {
-      const productId = `KA${(index + 1).toString().padStart(4, '0')}AP`;
+    const container = document.getElementById("productList");
+    products.forEach((p, i) => {
+      const id = `KA${(i + 1).toString().padStart(4, '0')}AP`;
       const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
-
-      const el = `
+      container.innerHTML += `
         <div class="product-card">
           <img src="${imageUrl}" alt="${p.name}" />
           <h3>${p.name}</h3>
           <p>Price: ${p.price}</p>
-          <a href="#" class="whatsapp-button"
-            data-id="${productId}"
-            data-name="${p.name}"
-            data-price="${p.price}"
-            data-image="${imageUrl}">
-            I'm Interested
-          </a>
-        </div>
-      `;
-
-      container.innerHTML += el;
+          <a href="#" class="whatsapp-button" data-id="${id}" data-name="${p.name}" data-price="${p.price}" data-image="${imageUrl}">I'm Interested</a>
+        </div>`;
     });
   </script>
 
-  <!-- WhatsApp + Form Logic -->
+  <!-- WhatsApp Popup Form -->
   <div id="popupForm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center;">
     <form id="interestForm" style="background:#fff; padding:20px; border-radius:10px; max-width:350px; width:90%;">
-      <h3 style="margin-top:0;">Your Details</h3>
+      <h3>Your Details</h3>
       <input type="text" id="custName" placeholder="Your Name" required style="width:100%; margin-bottom:10px; padding:8px;" />
       <input type="text" id="custAddress" placeholder="Your Address" required style="width:100%; margin-bottom:10px; padding:8px;" />
       <input type="email" id="custEmail" placeholder="Your Email" required style="width:100%; margin-bottom:10px; padding:8px;" />
       <input type="tel" id="custPhone" placeholder="WhatsApp Number" required style="width:100%; margin-bottom:10px; padding:8px;" />
       <input type="hidden" id="productInfo" />
-      <button type="submit" style="background:#25D366; color:#fff; border:none; padding:10px; width:100%; border-radius:5px; font-weight:bold;">Submit & Go to WhatsApp</button>
-      <button type="button" onclick="closeForm()" style="margin-top:10px; width:100%; padding:8px; border:none; background:#ccc; border-radius:5px;">Cancel</button>
+      <button type="submit" style="background:#25D366; color:#fff; border:none; padding:10px; width:100%; border-radius:5px;">Submit & Go to WhatsApp</button>
+      <button type="button" onclick="popup.style.display='none'" style="margin-top:10px; width:100%; padding:8px; background:#ccc; border:none;">Cancel</button>
     </form>
   </div>
 
   <script>
-  const formEl = document.getElementById("interestForm");
-  const popup = document.getElementById("popupForm");
-  let currentProduct = null;
+    const popup = document.getElementById("popupForm");
+    const form = document.getElementById("interestForm");
 
-  document.querySelectorAll(".products-container").forEach(container => {
-    container.addEventListener("click", function (e) {
-      const btn = e.target.closest(".whatsapp-button");
-      if (btn) {
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("whatsapp-button")) {
         e.preventDefault();
-        currentProduct = btn.dataset;
-        document.getElementById("productInfo").value = JSON.stringify(currentProduct);
+        const data = e.target.dataset;
+        document.getElementById("productInfo").value = JSON.stringify(data);
         popup.style.display = "flex";
       }
     });
-  });
 
-  function closeForm() {
-    popup.style.display = "none";
-    formEl.reset();
-  }
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-  formEl.addEventListener("submit", async function (e) {
-  e.preventDefault();
+      const name = document.getElementById("custName").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const email = document.getElementById("custEmail").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const product = JSON.parse(document.getElementById("productInfo").value);
 
-  const name = document.getElementById("custName").value.trim();
-  const address = document.getElementById("custAddress").value.trim();
-  const email = document.getElementById("custEmail").value.trim();
-  const phone = document.getElementById("custPhone").value.trim();
-  const product = JSON.parse(document.getElementById("productInfo").value);
+      fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name, address, email, phone,
+          productId: product.id,
+          productName: product.name
+        })
+      });
 
-  // ✅ 1. Send only buyer info + product ID to Google Sheet
-  fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name,
-      address,
-      email,
-      phone,
-      productId: product.id, // from dataset
-      productName: product.name
-    })
-  });
+      const msg = `Hello! I'm interested in this product:%0A%0A🆔 *Product ID*: ${product.id}%0A📦 *Name*: ${product.name}%0A💰 *Price*: ${product.price}%0A🖼️ *Image*: ${product.image}`;
+      window.location.href = `https://wa.me/91${phone}?text=${msg}`;
 
-  // ✅ 2. WhatsApp message should include ONLY product info
-  const message = `Hello! I'm interested in this product:%0A%0A🆔 *Product ID*: ${product.id}%0A📦 *Name*: ${product.name}%0A💰 *Price*: ${product.price}%0A🖼️ *Image*: ${product.image}`;
-  const whatsappLink = `https://wa.me/91${phone}?text=${message}`;
-
-  closeForm();
-  window.location.href = whatsappLink;
-});
- });
-    
-</script>
+      popup.style.display = "none";
+      form.reset();
+    });
+  </script>
 
 </body>
 </html>
+
 
