@@ -303,22 +303,23 @@
     { name: "Customised Rings", price: "₹120", image: "flower_ring1.jpg" }
   ];
 
+ <script>
   const container = document.querySelector(".products-container");
 
   products.forEach((p, index) => {
     const productId = `KA${(index + 1).toString().padStart(4, '0')}AP`;
     const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
-    const waText = encodeURIComponent(
-      `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🆔 Product ID: *${productId}*\n🛍️ Name: *${p.name}*\n💰 Price: ${p.price}\n🖼️ Image: ${imageUrl}\n\nPlease let me know how to proceed.`
-    );
 
     const el = `
       <div class="product-card">
         <img src="${imageUrl}" alt="${p.name}" />
         <h3>${p.name}</h3>
         <p>Price: ${p.price}</p>
-        <a class="whatsapp-button" target="_blank"
-          href="https://wa.me/918977659800?text=${waText}">
+        <a href="#" class="whatsapp-button"
+          data-id="${productId}"
+          data-name="${p.name}"
+          data-price="${p.price}"
+          data-image="${imageUrl}">
           I'm Interested
         </a>
       </div>
@@ -361,6 +362,74 @@
     font-weight: bold;
   }
 </style>
+  <!-- WhatsApp + Form Logic -->
+<div id="popupForm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center;">
+  <form id="interestForm" style="background:#fff; padding:20px; border-radius:10px; max-width:350px; width:90%;">
+    <h3 style="margin-top:0;">Your Details</h3>
+    <input type="text" id="custName" placeholder="Your Name" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <input type="text" id="custAddress" placeholder="Your Address" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <input type="email" id="custEmail" placeholder="Your Email" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <input type="tel" id="custPhone" placeholder="WhatsApp Number" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <input type="hidden" id="productInfo" />
+    <button type="submit" style="background:#25D366; color:#fff; border:none; padding:10px; width:100%; border-radius:5px; font-weight:bold;">Submit & Go to WhatsApp</button>
+    <button type="button" onclick="closeForm()" style="margin-top:10px; width:100%; padding:8px; border:none; background:#ccc; border-radius:5px;">Cancel</button>
+  </form>
+</div>
+
+  <script>
+  const formEl = document.getElementById("interestForm");
+  const popup = document.getElementById("popupForm");
+  let currentProduct = null;
+
+  document.querySelectorAll(".products-container").forEach(container => {
+    container.addEventListener("click", function (e) {
+      const btn = e.target.closest(".whatsapp-button");
+      if (btn) {
+        e.preventDefault();
+        currentProduct = btn.dataset;
+        document.getElementById("productInfo").value = JSON.stringify(currentProduct);
+        popup.style.display = "flex";
+      }
+    });
+  });
+
+  function closeForm() {
+    popup.style.display = "none";
+    formEl.reset();
+  }
+
+  formEl.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("custName").value.trim();
+    const address = document.getElementById("custAddress").value.trim();
+    const email = document.getElementById("custEmail").value.trim();
+    const phone = document.getElementById("custPhone").value.trim();
+    const product = JSON.parse(document.getElementById("productInfo").value);
+
+    // Send to Google Sheets
+    fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        address,
+        email,
+        phone,
+        productId: product.id,
+        productName: product.name
+      })
+    });
+
+    // WhatsApp redirect
+    const waMsg = `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🆔 Product ID: *${product.id}*\n🛍️ Name: *${product.name}*\n💰 Price: ${product.price}\n🖼️ Image: ${product.image}\n\n👤 Name: ${name}\n🏡 Address: ${address}\n📧 Email: ${email}\n📱 WhatsApp: ${phone}`;
+    window.open(`https://wa.me/918977659800?text=${encodeURIComponent(waMsg)}`, "_blank");
+
+    closeForm();
+  });
+</script>
+
 </body>
 </html>
 
