@@ -30,205 +30,202 @@
     scroll-behavior: smooth;
   }
 
-  ...
+  header {
+    position: sticky;
+    top: 0;
+    background-color: var(--light-purple);
+    padding: 10px 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 
-    header {
-      position: sticky;
-      top: 0;
-      background-color: var(--light-purple);
-      padding: 10px 20px;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
+  .logo img {
+    height: 50px;
+  }
 
-    .logo img {
-      height: 50px;
-    }
+  .nav-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 1rem;
+  }
 
-    .nav-links a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-      font-size: 1rem;
-    }
+  .nav-links a:hover {
+    color: var(--highlight);
+  }
 
-    .nav-links a:hover {
-      color: var(--highlight);
-    }
+  #landing-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+  }
 
-    #landing-page {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background-color: #fff;
-      padding: 30px;
-    }
+  #landing-page h2 {
+    font-size: 2rem;
+    color: var(--highlight);
+    margin-bottom: 10px;
+  }
 
-    #landing-page h2 {
-      font-size: 2rem;
-      color: var(--highlight);
-      margin-bottom: 10px;
-    }
+  #landing-page p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 5px 0;
+  }
 
-    #landing-page p {
-      font-size: 1.1rem;
-      color: #555;
-      margin: 5px 0;
-    }
+  .shop-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 28px;
+    font-size: 1rem;
+    background-color: #ff6f61;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
 
-    .shop-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 14px 28px;
-      font-size: 1rem;
-      background-color: #ff6f61;
-      color: #fff;
-      text-decoration: none;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
+  .shop-button:hover {
+    background-color: #e55b51;
+    transform: scale(1.05);
+  }
 
-    .shop-button:hover {
-      background-color: #e55b51;
-      transform: scale(1.05);
-    }
+  section {
+    padding: 40px 20px;
+    animation: fadeIn 1s ease-in-out;
+  }
 
-    section {
-      padding: 40px 20px;
-      animation: fadeIn 1s ease-in-out;
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  .section-title {
+    font-size: 1.8rem;
+    color: var(--highlight);
+    margin-bottom: 10px;
+    text-align: center;
+  }
 
-    .section-title {
-      font-size: 1.8rem;
-      color: var(--highlight);
-      margin-bottom: 10px;
-      text-align: center;
-    }
+  .byline {
+    font-size: 0.95rem;
+    color: #666;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
 
-    .byline {
-      font-size: 0.95rem;
-      color: #666;
-      text-align: center;
-      margin-top: -10px;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
+  .tagline {
+    background-color: var(--pale-blue);
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #444;
+    margin-bottom: 30px;
+  }
 
-    .tagline {
-      background-color: var(--pale-blue);
-      padding: 15px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #444;
-      margin-bottom: 30px;
-    }
+  .products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
 
-    .products-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+  .product-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    width: 260px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
 
+  .product-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  .product-card h3 {
+    font-size: 1.2rem;
+    color: var(--highlight);
+    margin: 8px 0;
+  }
+
+  .product-card p {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .product-card a {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  .product-card a:hover {
+    background-color: #1ebd56;
+  }
+
+  .product-card.coming-soon {
+    opacity: 0.7;
+    filter: grayscale(0.3);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  footer {
+    text-align: center;
+    background-color: var(--light-purple);
+    color: #444;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
     .product-card {
-      background-color: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      width: 260px;
-      padding: 16px;
+      width: 90%;
+    }
+
+    .nav-links {
+      margin-top: 10px;
       text-align: center;
-      transition: transform 0.2s ease;
-    }
-
-    .product-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .product-card img {
       width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin-bottom: 12px;
     }
-
-    .product-card h3 {
-      font-size: 1.2rem;
-      color: var(--highlight);
-      margin: 8px 0;
-    }
-
-    .product-card p {
-      font-size: 1rem;
-      margin-bottom: 12px;
-    }
-
-    .product-card a {
-      display: inline-block;
-      padding: 10px 16px;
-      background-color: #25D366;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .product-card a:hover {
-      background-color: #1ebd56;
-    }
-
-    .product-card.coming-soon {
-      opacity: 0.7;
-      filter: grayscale(0.3);
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    footer {
-      text-align: center;
-      background-color: var(--light-purple);
-      color: #444;
-      padding: 20px;
-      margin-top: 40px;
-      font-size: 0.95rem;
-    }
-
-    @media (max-width: 768px) {
-      .product-card {
-        width: 90%;
-      }
-
-      .nav-links {
-        margin-top: 10px;
-        text-align: center;
-        width: 100%;
-      }
-    }
+  }
   </style>
 </head>
 <body>
 
   <header>
     <div class="logo">
-      <img src="images/kaap-logo.jpg" alt="KAAP Commerce Logo"
- />
+      <img src="images/kaap-logo.jpg" alt="KAAP Commerce Logo" />
     </div>
     <nav class="nav-links">
       <a href="#landing-page">Home</a>
@@ -289,146 +286,112 @@
     &copy; 2025 KAAP Commerce. All rights reserved.
   </footer>
 
-  <!-- Product Catalog Container -->
-<div class="products-container"></div>
-
-<!-- Product Catalog Script -->
-<script>
-  const products = [
-    { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
-    { name: "Alphabet Pendant", price: "₹199", image: "alphabet_pendant1.jpg" },
-    { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
-    { name: "Car Stand and Hangings", price: "₹199", image: "car_stand_and_hangings.jpg" },
-    { name: "Customised Ear-rings", price: "₹299", image: "customized_earsings1.jpg" },
-    { name: "Customised Rings", price: "₹120", image: "flower_ring1.jpg" }
-  ];
-
- <script>
-  const container = document.querySelector(".products-container");
-
-  products.forEach((p, index) => {
-    const productId = `KA${(index + 1).toString().padStart(4, '0')}AP`;
-    const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
-
-    const el = `
-      <div class="product-card">
-        <img src="${imageUrl}" alt="${p.name}" />
-        <h3>${p.name}</h3>
-        <p>Price: ${p.price}</p>
-        <a href="#" class="whatsapp-button"
-          data-id="${productId}"
-          data-name="${p.name}"
-          data-price="${p.price}"
-          data-image="${imageUrl}">
-          I'm Interested
-        </a>
-      </div>
-    `;
-
-    container.innerHTML += el;
-  });
-</script>
-
-<!-- Optional Styling -->
-<style>
-  .products-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-  }
-  .product-card {
-    width: 220px;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    text-align: center;
-    background-color: white;
-  }
-  .product-card img {
-    width: 100%;
-    border-radius: 10px;
-  }
-  .whatsapp-button {
-    margin-top: 10px;
-    display: inline-block;
-    background-color: #25d366;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-</style>
-  <!-- WhatsApp + Form Logic -->
-<div id="popupForm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center;">
-  <form id="interestForm" style="background:#fff; padding:20px; border-radius:10px; max-width:350px; width:90%;">
-    <h3 style="margin-top:0;">Your Details</h3>
-    <input type="text" id="custName" placeholder="Your Name" required style="width:100%; margin-bottom:10px; padding:8px;" />
-    <input type="text" id="custAddress" placeholder="Your Address" required style="width:100%; margin-bottom:10px; padding:8px;" />
-    <input type="email" id="custEmail" placeholder="Your Email" required style="width:100%; margin-bottom:10px; padding:8px;" />
-    <input type="tel" id="custPhone" placeholder="WhatsApp Number" required style="width:100%; margin-bottom:10px; padding:8px;" />
-    <input type="hidden" id="productInfo" />
-    <button type="submit" style="background:#25D366; color:#fff; border:none; padding:10px; width:100%; border-radius:5px; font-weight:bold;">Submit & Go to WhatsApp</button>
-    <button type="button" onclick="closeForm()" style="margin-top:10px; width:100%; padding:8px; border:none; background:#ccc; border-radius:5px;">Cancel</button>
-  </form>
-</div>
+  <div class="products-container"></div>
 
   <script>
-  const formEl = document.getElementById("interestForm");
-  const popup = document.getElementById("popupForm");
-  let currentProduct = null;
+    const products = [
+      { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
+      { name: "Alphabet Pendant", price: "₹199", image: "alphabet_pendant1.jpg" },
+      { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
+      { name: "Car Stand and Hangings", price: "₹199", image: "car_stand_and_hangings.jpg" },
+      { name: "Customised Ear-rings", price: "₹299", image: "customized_earsings1.jpg" },
+      { name: "Customised Rings", price: "₹120", image: "flower_ring1.jpg" }
+    ];
 
-  document.querySelectorAll(".products-container").forEach(container => {
-    container.addEventListener("click", function (e) {
-      const btn = e.target.closest(".whatsapp-button");
-      if (btn) {
-        e.preventDefault();
-        currentProduct = btn.dataset;
-        document.getElementById("productInfo").value = JSON.stringify(currentProduct);
-        popup.style.display = "flex";
-      }
+    const container = document.querySelector(".products-container");
+
+    products.forEach((p, index) => {
+      const productId = `KA${(index + 1).toString().padStart(4, '0')}AP`;
+      const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
+
+      const el = `
+        <div class="product-card">
+          <img src="${imageUrl}" alt="${p.name}" />
+          <h3>${p.name}</h3>
+          <p>Price: ${p.price}</p>
+          <a href="#" class="whatsapp-button"
+            data-id="${productId}"
+            data-name="${p.name}"
+            data-price="${p.price}"
+            data-image="${imageUrl}">
+            I'm Interested
+          </a>
+        </div>
+      `;
+
+      container.innerHTML += el;
     });
-  });
+  </script>
 
-  function closeForm() {
-    popup.style.display = "none";
-    formEl.reset();
-  }
+  <!-- WhatsApp + Form Logic -->
+  <div id="popupForm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center;">
+    <form id="interestForm" style="background:#fff; padding:20px; border-radius:10px; max-width:350px; width:90%;">
+      <h3 style="margin-top:0;">Your Details</h3>
+      <input type="text" id="custName" placeholder="Your Name" required style="width:100%; margin-bottom:10px; padding:8px;" />
+      <input type="text" id="custAddress" placeholder="Your Address" required style="width:100%; margin-bottom:10px; padding:8px;" />
+      <input type="email" id="custEmail" placeholder="Your Email" required style="width:100%; margin-bottom:10px; padding:8px;" />
+      <input type="tel" id="custPhone" placeholder="WhatsApp Number" required style="width:100%; margin-bottom:10px; padding:8px;" />
+      <input type="hidden" id="productInfo" />
+      <button type="submit" style="background:#25D366; color:#fff; border:none; padding:10px; width:100%; border-radius:5px; font-weight:bold;">Submit & Go to WhatsApp</button>
+      <button type="button" onclick="closeForm()" style="margin-top:10px; width:100%; padding:8px; border:none; background:#ccc; border-radius:5px;">Cancel</button>
+    </form>
+  </div>
 
-  formEl.addEventListener("submit", async function (e) {
-    e.preventDefault();
+  <script>
+    const formEl = document.getElementById("interestForm");
+    const popup = document.getElementById("popupForm");
+    let currentProduct = null;
 
-    const name = document.getElementById("custName").value.trim();
-    const address = document.getElementById("custAddress").value.trim();
-    const email = document.getElementById("custEmail").value.trim();
-    const phone = document.getElementById("custPhone").value.trim();
-    const product = JSON.parse(document.getElementById("productInfo").value);
-
-    // Send to Google Sheets
-    fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        address,
-        email,
-        phone,
-        productId: product.id,
-        productName: product.name
-      })
+    document.querySelectorAll(".products-container").forEach(container => {
+      container.addEventListener("click", function (e) {
+        const btn = e.target.closest(".whatsapp-button");
+        if (btn) {
+          e.preventDefault();
+          currentProduct = btn.dataset;
+          document.getElementById("productInfo").value = JSON.stringify(currentProduct);
+          popup.style.display = "flex";
+        }
+      });
     });
 
-    // WhatsApp redirect
-    const waMsg = `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🆔 Product ID: *${product.id}*\n🛍️ Name: *${product.name}*\n💰 Price: ${product.price}\n🖼️ Image: ${product.image}\n\n👤 Name: ${name}\n🏡 Address: ${address}\n📧 Email: ${email}\n📱 WhatsApp: ${phone}`;
-    window.open(`https://wa.me/918977659800?text=${encodeURIComponent(waMsg)}`, "_blank");
+    function closeForm() {
+      popup.style.display = "none";
+      formEl.reset();
+    }
 
-    closeForm();
-  });
-</script>
+    formEl.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("custName").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const email = document.getElementById("custEmail").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const product = JSON.parse(document.getElementById("productInfo").value);
+
+      fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          address,
+          email,
+          phone,
+          productId: product.id,
+          productName: product.name
+        })
+      });
+
+      const waMsg = `Hi KAAP Commerce!\n\nI'm interested in the following product:\n\n🄁 Product ID: *${product.id}*\n🏣️ Name: *${product.name}*\n💰 Price: ${product.price}\n🖼️ Image: ${product.image}\n\n👤 Name: ${name}\n🏡 Address: ${address}\n📧 Email: ${email}\n📱 WhatsApp: ${phone}`;
+
+      window.open(`https://wa.me/918977659800?text=${encodeURIComponent(waMsg)}`, "_blank");
+
+      closeForm();
+    });
+  </script>
+</body>
+</html>
+
 
 </body>
 </html>
