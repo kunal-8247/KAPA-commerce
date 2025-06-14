@@ -308,16 +308,20 @@
       const phone = document.getElementById("custPhone").value.trim();
       const product = JSON.parse(document.getElementById("productInfo").value);
 
-      fetch("https://script.google.com/macros/s/AKfycbw4XOnjJjhtWkMOmuo4zfAKqQbXUdP1JNMzCHGQwM3k1iqFYCAjwaTYtT44cJ5NVV9eLQ/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name, address, email, phone,
-          productId: product.id,
-          productName: product.name
-        })
-      });
+      fetch("https://script.google.com/macros/s/YOUR-URL-ID/exec", {
+  method: "POST",
+  mode: "no-cors",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name,
+    address,
+    email,
+    phone,
+    productId: product.id,
+    productName: product.name
+  })
+});
+
 
       const msg = `Hello! I'm interested in this product:%0A%0A🆔 *Product ID*: ${product.id}%0A📦 *Name*: ${product.name}%0A💰 *Price*: ${product.price}%0A🖼️ *Image*: ${product.image}`;
       window.location.href = `https://wa.me/91${phone}?text=${msg}`;
