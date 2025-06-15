@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="KAAP Commerce offers personalized, handcrafted gifts perfect for every occasion." />
-  <meta name="google-site-verification" content="oMOoPCP2rVTdlil-FA-hmLcm2ZgeMgjXBdIepu9C0Gg" />
   <meta name="keywords" content="handmade gifts, resin keychains, personalized gifts, KAAP Commerce" />
   <meta name="author" content="KAAP Commerce Team" />
+  <meta name="google-site-verification" content="oMOoPCP2rVTdlil-FA-hmLcm2ZgeMgjXBdIepu9C0Gg" />
   <title>KAAP Commerce - Unique Handmade Gifts</title>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <style>
@@ -21,7 +21,6 @@
     }
 
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -43,10 +42,7 @@
       flex-wrap: wrap;
     }
 
-    .logo img {
-      height: 50px;
-    }
-
+    .logo img { height: 50px; }
     .nav-links a {
       margin: 0 10px;
       text-decoration: none;
@@ -55,9 +51,7 @@
       font-size: 1rem;
     }
 
-    .nav-links a:hover {
-      color: var(--highlight);
-    }
+    .nav-links a:hover { color: var(--highlight); }
 
     #landing-page {
       height: 100vh;
@@ -77,7 +71,6 @@
       font-size: 1rem;
       background-color: #ff6f61;
       color: #fff;
-      text-decoration: none;
       border: none;
       border-radius: 25px;
       cursor: pointer;
@@ -132,10 +125,7 @@
       transition: transform 0.2s ease;
     }
 
-    .product-card:hover {
-      transform: translateY(-6px);
-    }
-
+    .product-card:hover { transform: translateY(-6px); }
     .product-card img {
       width: 100%;
       border-radius: 10px;
@@ -148,17 +138,17 @@
       margin: 8px 0;
     }
 
-    .product-card a {
-      display: inline-block;
+    .product-card button {
       padding: 10px 16px;
       background-color: #25D366;
       color: white;
-      text-decoration: none;
+      border: none;
       border-radius: 8px;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    .product-card a:hover {
+    .product-card button:hover {
       background-color: #1ebd56;
     }
 
@@ -176,169 +166,184 @@
       font-size: 0.95rem;
     }
 
-    @media (max-width: 768px) {
-      .product-card {
-        width: 90%;
-      }
+    #buyNowBtn {
+      display: none;
+      margin: 20px auto;
+      background-color: #5e548e;
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
 
-      .nav-links {
-        margin-top: 10px;
-        text-align: center;
-        width: 100%;
-      }
+    #cartCount {
+      font-weight: bold;
+      margin-left: 10px;
+      color: var(--highlight);
+    }
+
+    @media (max-width: 768px) {
+      .product-card { width: 90%; }
+      .nav-links { margin-top: 10px; text-align: center; width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="images/kaap-logo.jpg" alt="KAAP Commerce Logo" />
+<header>
+  <div class="logo"><img src="images/kaap-logo.jpg" alt="KAAP Commerce Logo" /></div>
+  <nav class="nav-links">
+    <a href="#landing-page">Home</a>
+    <a href="#products">Products</a>
+    <a href="#upcoming">Upcoming</a>
+    <a href="#about">About</a>
+    <a href="#vision">Vision</a>
+    <span id="cartCount">🛒 (0)</span>
+  </nav>
+</header>
+
+<section id="landing-page">
+  <h2>Best for Buying Gifts for Your Loved Ones</h2>
+  <p>Explore our unique handmade items that express love and thoughtfulness.</p>
+  <a href="#products" class="shop-button">Shop Now</a>
+</section>
+
+<section id="products">
+  <h2 class="section-title">Featured Products</h2>
+  <p class="byline">Handcrafted by Raj nandini & KAAP Commerce</p>
+  <div class="products-container" id="productList"></div>
+  <button id="buyNowBtn">Buy Now</button>
+</section>
+
+<section id="upcoming">
+  <h2 class="section-title">Future Upcoming</h2>
+  <p class="byline">Jewellery by Pravallika</p>
+  <div class="products-container">
+    <div class="product-card coming-soon">
+      <img src="images/coming-soon.jpg" alt="Upcoming Jewellery Collection" />
+      <h3>Coming Soon</h3>
+      <p>Elegant handmade jewellery launching soon!</p>
     </div>
-    <nav class="nav-links">
-      <a href="#landing-page">Home</a>
-      <a href="#products">Products</a>
-      <a href="#upcoming">Upcoming</a>
-      <a href="#about">About</a>
-      <a href="#vision">Vision</a>
-    </nav>
-  </header>
-
-  <section id="landing-page">
-    <h2>Best for Buying Gifts for Your Loved Ones</h2>
-    <p>Explore our unique handmade items that express love and thoughtfulness.</p>
-    <a href="#products" class="shop-button">Shop Now</a>
-  </section>
-
-  <section id="products">
-    <h2 class="section-title">Featured Products</h2>
-    <p class="byline">Handcrafted by Raj nandini & KAAP Commerce</p>
-    <div class="products-container" id="productList"></div>
-  </section>
-
-  <section id="upcoming">
-    <h2 class="section-title">Future Upcoming</h2>
-    <p class="byline">Jewellery by Pravallika</p>
-    <div class="products-container">
-      <div class="product-card coming-soon">
-        <img src="images/coming-soon.jpg" alt="Upcoming Jewellery Collection" />
-        <h3>Coming Soon</h3>
-        <p>Elegant handmade jewellery launching soon!</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="about">
-    <h2 class="section-title">About Us</h2>
-    <p style="text-align:center">
-      KAAP Commerce is a young, passionate brand providing unique, handcrafted gifts for all occasions.
-    </p>
-  </section>
-
-  <section id="vision">
-    <h2 class="section-title">Our Vision & Motto</h2>
-    <p style="text-align:center">
-      Our vision is to empower creativity and bring smiles through meaningful gifts. <br>
-      <strong>Motto:</strong> “Create. Celebrate. Cherish.”
-    </p>
-  </section>
-
-  <footer>
-    &copy; 2025 KAAP Commerce. All rights reserved.
-  </footer>
-
-  <!-- Dynamic Products -->
-  <script>
-    const products = [
-      { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
-      { name: "Alphabet Pendant", price: "₹199", image: "alphabet_pendant1.jpg" },
-      { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
-      { name: "Car Stand and Hangings", price: "₹199", image: "car_stand_and_hangings.jpg" },
-      { name: "Customised Ear-rings", price: "₹299", image: "customized_earsings1.jpg" },
-      { name: "Customised Rings", price: "₹120", image: "flower_ring1.jpg" }
-    ];
-
-    const container = document.getElementById("productList");
-    products.forEach((p, i) => {
-      const id = `KA${(i + 1).toString().padStart(4, '0')}AP`;
-      const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
-      container.innerHTML += `
-        <div class="product-card">
-          <img src="${imageUrl}" alt="${p.name}" />
-          <h3>${p.name}</h3>
-          <p>Price: ${p.price}</p>
-          <a href="#" class="whatsapp-button" data-id="${id}" data-name="${p.name}" data-price="${p.price}" data-image="${imageUrl}">I'm Interested</a>
-        </div>`;
-    });
-  </script>
-
-  <!-- WhatsApp Popup Form -->
-  <div id="popupForm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center;">
-    <form id="interestForm" style="background:#fff; padding:20px; border-radius:10px; max-width:350px; width:90%;">
-      <h3>Your Details</h3>
-      <input type="text" id="custName" placeholder="Your Name" required style="width:100%; margin-bottom:10px; padding:8px;" />
-      <input type="text" id="custAddress" placeholder="Your Address" required style="width:100%; margin-bottom:10px; padding:8px;" />
-      <input type="email" id="custEmail" placeholder="Your Email" required style="width:100%; margin-bottom:10px; padding:8px;" />
-      <input type="tel" id="custPhone" placeholder="WhatsApp Number" required style="width:100%; margin-bottom:10px; padding:8px;" />
-      <input type="hidden" id="productInfo" />
-      <button type="submit" style="background:#25D366; color:#fff; border:none; padding:10px; width:100%; border-radius:5px;">Submit & Go to WhatsApp</button>
-      <button type="button" id="cancelBtn" style="margin-top:10px; width:100%; padding:8px; background:#ccc; border:none;">Cancel</button>
-    </form>
   </div>
+</section>
 
-  <script>
-    const popup = document.getElementById("popupForm");
-    const form = document.getElementById("interestForm");
+<section id="about">
+  <h2 class="section-title">About Us</h2>
+  <p style="text-align:center">KAAP Commerce is a young, passionate brand providing unique, handcrafted gifts for all occasions.</p>
+</section>
 
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("whatsapp-button")) {
-        e.preventDefault();
-        const data = e.target.dataset;
-        document.getElementById("productInfo").value = JSON.stringify(data);
-        popup.style.display = "flex";
-      }
-    });
+<section id="vision">
+  <h2 class="section-title">Our Vision & Motto</h2>
+  <p style="text-align:center">
+    Our vision is to empower creativity and bring smiles through meaningful gifts. <br>
+    <strong>Motto:</strong> “Create. Celebrate. Cherish.”
+  </p>
+</section>
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+<footer>
+  &copy; 2025 KAAP Commerce. All rights reserved.
+</footer>
 
-      const name = document.getElementById("custName").value.trim();
-     const address = document.getElementById("custAddress").value.trim();
-const pincodePattern = /\b\d{6}\b$/;
+<div id="popupForm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center;">
+  <form id="interestForm" style="background:#fff; padding:20px; border-radius:10px; max-width:350px; width:90%;">
+    <h3>Your Details</h3>
+    <input type="text" id="custName" placeholder="Your Name" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <input type="text" id="custAddress" placeholder="Your Address (end with 6-digit PIN)" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <input type="email" id="custEmail" placeholder="Your Email" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <input type="tel" id="custPhone" placeholder="WhatsApp Number" required style="width:100%; margin-bottom:10px; padding:8px;" />
+    <button type="submit" style="background:#25D366; color:#fff; border:none; padding:10px; width:100%; border-radius:5px;">Submit & Go to WhatsApp</button>
+    <button type="button" id="cancelBtn" style="margin-top:10px; width:100%; padding:8px; background:#ccc; border:none;">Cancel</button>
+  </form>
+</div>
 
-if (!pincodePattern.test(address)) {
-  alert("Please enter a valid 6-digit PIN code at the end of your address.");
-  return;
+<script>
+const products = [
+  { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
+  { name: "Alphabet Pendant", price: "₹199", image: "alphabet_pendant1.jpg" },
+  { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
+  { name: "Car Stand and Hangings", price: "₹199", image: "car_stand_and_hangings.jpg" },
+  { name: "Customised Ear-rings", price: "₹299", image: "customized_earsings1.jpg" },
+  { name: "Customised Rings", price: "₹120", image: "flower_ring1.jpg" }
+];
+
+const cart = [];
+const container = document.getElementById("productList");
+const buyNowBtn = document.getElementById("buyNowBtn");
+const cartCount = document.getElementById("cartCount");
+
+function addToCart(id, name, price, image) {
+  cart.push({ id, name, price, image });
+  buyNowBtn.style.display = "block";
+  cartCount.innerText = `🛒 (${cart.length})`;
+  alert(`${name} has been added to cart!`);
 }
-      const email = document.getElementById("custEmail").value.trim();
-      const phone = document.getElementById("custPhone").value.trim();
-      const product = JSON.parse(document.getElementById("productInfo").value);
 
-      fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          address,
-          email,
-          phone,
-          productId: product.id,
-          productName: product.name
-        })
-      });
+products.forEach((p, i) => {
+  const id = `KA${(i + 1).toString().padStart(4, '0')}AP`;
+  const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
 
-      const msg = `Hello! I'm interested in this product:%0A%0A🆔 *Product ID*: ${product.id}%0A📦 *Name*: ${product.name}%0A💰 *Price*: ${product.price}%0A🖼️ *Image*: ${product.image}`;
-      window.location.href = `https://wa.me/918977659800?text=${msg}`;
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.innerHTML = `
+    <img src="${imageUrl}" alt="${p.name}" />
+    <h3>${p.name}</h3>
+    <p>Price: ${p.price}</p>
+    <button>Add to Cart</button>
+  `;
 
-      popup.style.display = "none";
-      form.reset();
+  const button = card.querySelector("button");
+  button.addEventListener("click", () => {
+    addToCart(id, p.name, p.price, imageUrl);
+    button.innerText = "Added!";
+    button.disabled = true;
+    button.style.backgroundColor = "#ccc";
+  });
+
+  container.appendChild(card);
+});
+
+buyNowBtn.onclick = () => {
+  if (cart.length === 0) return alert("Cart is empty!");
+  document.getElementById("popupForm").style.display = "flex";
+};
+
+document.getElementById("cancelBtn").onclick = () => {
+  document.getElementById("popupForm").style.display = "none";
+};
+
+document.getElementById("interestForm").onsubmit = (e) => {
+  e.preventDefault();
+  const name = document.getElementById("custName").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+  const email = document.getElementById("custEmail").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+
+  const pinPattern = /\b\d{6}\b$/;
+  if (!pinPattern.test(address)) {
+    alert("Please enter a valid 6-digit PIN code at the end of your address.");
+    return;
+  }
+
+  cart.forEach(item => {
+    fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, address, email, phone, productId: item.id, productName: item.name })
     });
+  });
 
-    document.getElementById("cancelBtn").addEventListener("click", () => {
-      popup.style.display = "none";
-    });
-  </script>
+  const message = cart.map(p => `🆔 ${p.id}\n📦 ${p.name}\n💰 ${p.price}`).join('%0A%0A');
+  const url = `https://wa.me/918977659800?text=Hello! I'm interested in these items:%0A%0A${message}`;
+  window.location.href = url;
+
+  document.getElementById("popupForm").style.display = "none";
+  document.getElementById("interestForm").reset();
+};
+</script>
 
 </body>
 </html>
+
