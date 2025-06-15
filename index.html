@@ -19,7 +19,6 @@
       --text-dark: #333;
       --highlight: #5e548e;
     }
-
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -28,7 +27,6 @@
       color: var(--text-dark);
       scroll-behavior: smooth;
     }
-
     header {
       position: sticky;
       top: 0;
@@ -41,7 +39,6 @@
       justify-content: space-between;
       flex-wrap: wrap;
     }
-
     .logo img { height: 50px; }
     .nav-links a {
       margin: 0 10px;
@@ -50,9 +47,7 @@
       font-weight: bold;
       font-size: 1rem;
     }
-
     .nav-links a:hover { color: var(--highlight); }
-
     #landing-page {
       height: 100vh;
       display: flex;
@@ -63,7 +58,6 @@
       background-color: #fff;
       padding: 30px;
     }
-
     .shop-button {
       display: inline-block;
       margin-top: 20px;
@@ -76,29 +70,24 @@
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease;
     }
-
     .shop-button:hover {
       background-color: #e55b51;
       transform: scale(1.05);
     }
-
     section {
       padding: 40px 20px;
       animation: fadeIn 1s ease-in-out;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     .section-title {
       font-size: 1.8rem;
       color: var(--highlight);
       margin-bottom: 10px;
       text-align: center;
     }
-
     .byline {
       font-size: 0.95rem;
       color: #666;
@@ -107,14 +96,12 @@
       margin-bottom: 20px;
       font-style: italic;
     }
-
     .products-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
-
     .product-card {
       background-color: white;
       border-radius: 16px;
@@ -124,20 +111,17 @@
       text-align: center;
       transition: transform 0.2s ease;
     }
-
     .product-card:hover { transform: translateY(-6px); }
     .product-card img {
       width: 100%;
       border-radius: 10px;
       margin-bottom: 12px;
     }
-
     .product-card h3 {
       font-size: 1.2rem;
       color: var(--highlight);
       margin: 8px 0;
     }
-
     .product-card button {
       padding: 10px 16px;
       background-color: #25D366;
@@ -147,16 +131,13 @@
       font-weight: bold;
       cursor: pointer;
     }
-
     .product-card button:hover {
       background-color: #1ebd56;
     }
-
     .product-card.coming-soon {
       opacity: 0.7;
       filter: grayscale(0.3);
     }
-
     footer {
       text-align: center;
       background-color: var(--light-purple);
@@ -165,7 +146,6 @@
       margin-top: 40px;
       font-size: 0.95rem;
     }
-
     #buyNowBtn {
       display: none;
       margin: 20px auto;
@@ -177,13 +157,11 @@
       font-size: 1rem;
       cursor: pointer;
     }
-
     #cartCount {
       font-weight: bold;
       margin-left: 10px;
       color: var(--highlight);
     }
-
     @media (max-width: 768px) {
       .product-card { width: 90%; }
       .nav-links { margin-top: 10px; text-align: center; width: 100%; }
@@ -259,50 +237,42 @@
 </div>
 
 <script>
-const products = [
-  { name: "Alphabet Resin Keychain", price: "₹249", image: "Keychain1.jpg" },
-  { name: "Alphabet Pendant", price: "₹199", image: "alphabet_pendant1.jpg" },
-  { name: "Customized Bookmarks", price: "₹199", image: "bookmarks.jpg" },
-  { name: "Car Stand and Hangings", price: "₹199", image: "car_stand_and_hangings.jpg" },
-  { name: "Customised Ear-rings", price: "₹299", image: "customized_earsings1.jpg" },
-  { name: "Customised Rings", price: "₹120", image: "flower_ring1.jpg" }
-];
-
-const cart = [];
 const container = document.getElementById("productList");
 const buyNowBtn = document.getElementById("buyNowBtn");
 const cartCount = document.getElementById("cartCount");
+const cart = [];
 
-function addToCart(id, name, price, image) {
-  cart.push({ id, name, price, image });
-  buyNowBtn.style.display = "block";
-  cartCount.innerText = `🛒 (${cart.length})`;
-  alert(`${name} has been added to cart!`);
-}
+// Use your provided Google Apps Script Web App URL
+const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwnmidz7K_97QxeXAoMHKp0NMVbDWg0KQoLqtxk6wiAY4ldVGLWFxyIjhfRif9ItxtH/exec";
 
-products.forEach((p, i) => {
-  const id = `KA${(i + 1).toString().padStart(4, '0')}AP`;
-  const imageUrl = `https://kunal-8247.github.io/KAPA-commerce/images/${p.image}`;
-
-  const card = document.createElement("div");
-  card.className = "product-card";
-  card.innerHTML = `
-    <img src="${imageUrl}" alt="${p.name}" />
-    <h3>${p.name}</h3>
-    <p>Price: ${p.price}</p>
-    <button>Add to Cart</button>
-  `;
-
-  const button = card.querySelector("button");
-  button.addEventListener("click", () => {
-    addToCart(id, p.name, p.price, imageUrl);
-    button.innerText = "Added!";
-    button.disabled = true;
-    button.style.backgroundColor = "#ccc";
+fetch(GOOGLE_SHEET_API_URL)
+  .then(res => res.json())
+  .then(products => {
+    products.forEach((p, i) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.name}" />
+        <h3>${p.name}</h3>
+        <p>Price: ${p.price}</p>
+        <button>Add to Cart</button>
+      `;
+      const button = card.querySelector("button");
+      button.addEventListener("click", () => {
+        cart.push({ id: p.id, name: p.name, price: p.price, image: p.image });
+        buyNowBtn.style.display = "block";
+        cartCount.innerText = `🛒 (${cart.length})`;
+        button.innerText = "Added!";
+        button.disabled = true;
+        button.style.backgroundColor = "#ccc";
+      });
+      container.appendChild(card);
+    });
+  })
+  .catch(err => {
+    container.innerHTML = "<p style='color:red'>Failed to load products. Please try again later.</p>";
+    console.error("Error fetching products:", err);
   });
-
-  container.appendChild(card);
-});
 
 buyNowBtn.onclick = () => {
   if (cart.length === 0) return alert("Cart is empty!");
@@ -346,4 +316,3 @@ document.getElementById("interestForm").onsubmit = (e) => {
 
 </body>
 </html>
-
