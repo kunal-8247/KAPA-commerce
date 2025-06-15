@@ -303,7 +303,13 @@
       e.preventDefault();
 
       const name = document.getElementById("custName").value.trim();
-      const address = document.getElementById("custAddress").value.trim();
+     const address = document.getElementById("custAddress").value.trim();
+const pincodePattern = /\b\d{6}\b$/;
+
+if (!pincodePattern.test(address)) {
+  alert("Please enter a valid 6-digit PIN code at the end of your address.");
+  return;
+}
       const email = document.getElementById("custEmail").value.trim();
       const phone = document.getElementById("custPhone").value.trim();
       const product = JSON.parse(document.getElementById("productInfo").value);
