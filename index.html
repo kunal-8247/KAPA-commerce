@@ -108,7 +108,6 @@
       opacity: 0.85;
       pointer-events: none;
     }
-    /* REMOVED .hero-blobs, .hero-blobs2, .hero-illustration and related keyframes */
     .hero-content {
       position: relative;
       z-index: 3;
@@ -169,7 +168,6 @@
       70% { box-shadow: 0 0 0 12px #ff6f6100; }
       100% { box-shadow: 0 0 0 0 #ff6f6100; }
     }
-    /* Section Styles */
     section {
       padding: 54px 20px;
       animation: fadeIn 1.1s ease-in;
@@ -209,7 +207,6 @@
       background: var(--primary-gradient);
       opacity: .28;
     }
-    /* Products Grid */
     .products-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -250,12 +247,6 @@
       box-shadow: 0 8px 24px rgba(94,84,142,0.16);
       outline: none;
     }
-    .product-card img {
-      width: 95%;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px #b8c0ff28;
-    }
     .product-card h3 {
       font-size: 1.15rem;
       color: var(--highlight);
@@ -291,7 +282,6 @@
       filter: grayscale(0.16);
       pointer-events: none;
     }
-    /* Buy Now button */
     #buyNowBtn {
       display: none;
       margin: 28px auto 0 auto;
@@ -311,7 +301,6 @@
       transform: scale(1.04);
       outline: none;
     }
-    /* Loader for product fetch */
     .loader {
       border: 4px solid #f3f3f3;
       border-top: 4px solid var(--highlight);
@@ -326,7 +315,6 @@
       0% { transform: rotate(0deg);}
       100% { transform: rotate(360deg);}
     }
-    /* Footer */
     footer {
       text-align: center;
       background: var(--primary-gradient);
@@ -339,7 +327,6 @@
       position: relative;
       z-index: 2;
     }
-    /* Popup Form */
     #popupForm {
       display: none;
       position: fixed;
@@ -413,7 +400,95 @@
       color: #333;
       outline: none;
     }
-    /* Mobile Responsive */
+    /* SLIDER STYLES */
+    .product-image-slider {
+      width: 100%;
+      max-width: 230px;
+      margin: 0 auto 10px auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 13px;
+      box-shadow: 0 2px 8px #b8c0ff28;
+      background: #f8f8fd;
+      min-height: 170px;
+    }
+    .slider-images-wrapper {
+      display: flex;
+      transition: transform 0.36s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    .slider-image-single {
+      min-width: 230px;
+      min-height: 170px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .slider-image-single img {
+      width: 180px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 13px;
+      margin-top: 10px;
+      margin-bottom: 7px;
+      box-shadow: 0 2px 8px #b8c0ff28;
+      background: #fff;
+    }
+    .slider-description {
+      font-size: 0.96rem;
+      color: #635985;
+      text-align: center;
+      margin-bottom: 8px;
+      min-height: 32px;
+      max-width: 200px;
+      word-break: break-word;
+    }
+    .slider-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff8;
+      border: none;
+      color: #5e548e;
+      font-size: 1.5rem;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px #b8c0ff28;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: .85;
+    }
+    .slider-nav-btn:hover, .slider-nav-btn:focus { background: #e7c6ff; }
+    .slider-prev { left: 4px; }
+    .slider-next { right: 4px; }
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2px;
+      gap: 5px;
+    }
+    .slider-dot {
+      width: 8px;
+      height: 8px;
+      background: #c8b6ff;
+      border-radius: 50%;
+      opacity: 0.4;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      border: none;
+      padding: 0;
+    }
+    .slider-dot.active {
+      background: #5e548e;
+      opacity: 1;
+    }
     @media (max-width: 1200px) {
       #landing-page { max-width: 99vw; }
       .hero-content { padding: 46px 12px 46px 22px; }
@@ -424,7 +499,6 @@
       .product-card { min-height: 320px;}
       .hero-content { padding: 36px 12px 36px 12px; }
       .hero-title { font-size: 2.1rem; }
-      /* .hero-illustration { width: 130px; } -- removed */
     }
     @media (max-width: 700px) {
       #landing-page {
@@ -438,7 +512,6 @@
         max-width: unset;
         width: 100%;
       }
-      /* .hero-illustration { width: 100px; } -- removed */
     }
     @media (max-width: 600px) {
       header { flex-direction: column; align-items: flex-start; padding: 10px 8px;}
@@ -468,11 +541,6 @@
 <main>
 <section id="landing-page">
   <div class="hero-bg"></div>
-  <!-- REMOVED: 
-  <img class="hero-blobs" src="images/blob-purple.svg" alt="" aria-hidden="true" />
-  <img class="hero-blobs2" src="images/blob-pink.svg" alt="" aria-hidden="true" />
-  <img src="images/hero-gift-illustration.svg" alt="Gifting Illustration" class="hero-illustration" /> 
-  -->
   <div class="hero-content">
     <h1 class="hero-title">
       Surprise &amp; Delight<br>
@@ -493,8 +561,6 @@
   </div>
   <button id="buyNowBtn" aria-label="Buy Now">Buy Now</button>
 </section>
-
-<!-- Testimonials section removed -->
 
 <section id="upcoming">
   <h2 class="section-title">Future Upcoming</h2>
@@ -557,6 +623,16 @@
   // Product API
   const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwnmidz7K_97QxeXAoMHKp0NMVbDWg0KQoLqtxk6wiAY4ldVGLWFxyIjhfRif9ItxtH/exec";
 
+  // Helper: Parse JSON array or comma-separated
+  function parseToArray(val) {
+    if (!val) return [];
+    if (typeof val === "string") {
+      try { return JSON.parse(val); }
+      catch { return val.split(",").map(s => s.trim()).filter(Boolean); }
+    }
+    return Array.isArray(val) ? val : [val];
+  }
+
   // Accessibility: hide popup on start
   popupForm.style.display = "none";
 
@@ -570,18 +646,65 @@
         return;
       }
       products.forEach((p, i) => {
+        // Multiple images and descriptions support
+        const images = parseToArray(p.images || p.image);
+        const descriptions = parseToArray(p.descriptions || p.description);
+
         const card = document.createElement("div");
         card.className = "product-card";
         card.tabIndex = 0;
+
+        // Build slider HTML
+        let sliderImagesHtml = '';
+        for (let j = 0; j < images.length; j++) {
+          sliderImagesHtml += `
+            <div class="slider-image-single">
+              <img src="${images[j]}" alt="${p.name} ${descriptions[j] ? '- '+descriptions[j] : ''}" />
+              <div class="slider-description">${descriptions[j] || ''}</div>
+            </div>
+          `;
+        }
+        const sliderId = `slider-${i}-${Date.now()}`;
         card.innerHTML = `
-          <img src="${p.image}" alt="${p.name}" />
+          <div class="product-image-slider" id="${sliderId}">
+            <button class="slider-nav-btn slider-prev" style="display:none" aria-label="Previous image">&#8678;</button>
+            <div class="slider-images-wrapper">
+              ${sliderImagesHtml}
+            </div>
+            <button class="slider-nav-btn slider-next"${images.length <= 1 ? ' style="display:none"':''} aria-label="Next image">&#8680;</button>
+            <div class="slider-dots">${images.map((_,idx)=>
+              `<button class="slider-dot${idx===0?' active':''}" data-idx="${idx}" aria-label="Go to image ${idx+1}"></button>`).join('')}
+            </div>
+          </div>
           <h3>${p.name}</h3>
           <p>Price: <b>${p.price}</b></p>
           <button type="button" aria-label="Add ${p.name} to cart">Add to Cart</button>
         `;
-        const button = card.querySelector("button");
+
+        // Slider logic
+        setTimeout(() => {
+          const slider = card.querySelector(`#${sliderId}`);
+          if (!slider) return;
+          const wrapper = slider.querySelector('.slider-images-wrapper');
+          const prevBtn = slider.querySelector('.slider-prev');
+          const nextBtn = slider.querySelector('.slider-next');
+          const dots = Array.from(slider.querySelectorAll('.slider-dot'));
+          let idx = 0;
+          function show(idxToShow) {
+            idx = idxToShow;
+            wrapper.style.transform = `translateX(-${230*idx}px)`;
+            dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
+            prevBtn.style.display = idx === 0 ? 'none':'flex';
+            nextBtn.style.display = idx === images.length-1 ? 'none':'flex';
+          }
+          prevBtn && prevBtn.addEventListener('click', ()=> show(Math.max(idx-1,0)));
+          nextBtn && nextBtn.addEventListener('click', ()=> show(Math.min(idx+1,images.length-1)));
+          dots.forEach((d,di)=>d.addEventListener('click', ()=>show(di)));
+        }, 0);
+
+        const button = card.querySelector("button[aria-label^='Add']");
         button.addEventListener("click", () => {
-          cart.push({ id: p.id, name: p.name, price: p.price, image: p.image });
+          cart.push({ id: p.id, name: p.name, price: p.price, image: images[0] });
           buyNowBtn.style.display = "block";
           cartCount.innerText = `🛒 (${cart.length})`;
           button.innerText = "Added!";
