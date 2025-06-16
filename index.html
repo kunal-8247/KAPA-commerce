@@ -448,24 +448,27 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: #fff8;
+      background: transparent !important;
       border: none;
       color: #5e548e;
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       cursor: pointer;
       z-index: 3;
-      transition: background 0.2s;
-      box-shadow: 0 2px 8px #b8c0ff28;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: none;
       outline: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: .85;
+      opacity: .92;
     }
-    .slider-nav-btn:hover, .slider-nav-btn:focus { background: #e7c6ff; }
+    .slider-nav-btn:hover, .slider-nav-btn:focus {
+      background: #e7c6ff50 !important;
+      color: #ff6f61;
+    }
     .slider-prev { left: 4px; }
     .slider-next { right: 4px; }
     .slider-dots {
@@ -654,6 +657,9 @@
         card.className = "product-card";
         card.tabIndex = 0;
 
+        // Only show slider controls if multiple images
+        const hasMultiple = images.length > 1;
+
         // Build slider HTML
         let sliderImagesHtml = '';
         for (let j = 0; j < images.length; j++) {
@@ -667,13 +673,14 @@
         const sliderId = `slider-${i}-${Date.now()}`;
         card.innerHTML = `
           <div class="product-image-slider" id="${sliderId}">
-            <button class="slider-nav-btn slider-prev" style="display:none" aria-label="Previous image">&#8678;</button>
+            ${hasMultiple ? `<button class="slider-nav-btn slider-prev" style="display:none" aria-label="Previous image">&#8592;</button>` : ''}
             <div class="slider-images-wrapper">
               ${sliderImagesHtml}
             </div>
-            <button class="slider-nav-btn slider-next"${images.length <= 1 ? ' style="display:none"':''} aria-label="Next image">&#8680;</button>
-            <div class="slider-dots">${images.map((_,idx)=>
-              `<button class="slider-dot${idx===0?' active':''}" data-idx="${idx}" aria-label="Go to image ${idx+1}"></button>`).join('')}
+            ${hasMultiple ? `<button class="slider-nav-btn slider-next" aria-label="Next image">&#8594;</button>` : ''}
+            <div class="slider-dots"${hasMultiple ? '' : ' style="display:none;"'}>
+              ${images.map((_,idx)=>
+                `<button class="slider-dot${idx===0?' active':''}" data-idx="${idx}" aria-label="Go to image ${idx+1}"></button>`).join('')}
             </div>
           </div>
           <h3>${p.name}</h3>
@@ -694,12 +701,14 @@
             idx = idxToShow;
             wrapper.style.transform = `translateX(-${230*idx}px)`;
             dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
-            prevBtn.style.display = idx === 0 ? 'none':'flex';
-            nextBtn.style.display = idx === images.length-1 ? 'none':'flex';
+            if (prevBtn) prevBtn.style.display = idx === 0 ? 'none':'flex';
+            if (nextBtn) nextBtn.style.display = idx === images.length-1 ? 'none':'flex';
           }
-          prevBtn && prevBtn.addEventListener('click', ()=> show(Math.max(idx-1,0)));
-          nextBtn && nextBtn.addEventListener('click', ()=> show(Math.min(idx+1,images.length-1)));
-          dots.forEach((d,di)=>d.addEventListener('click', ()=>show(di)));
+          if (hasMultiple) {
+            prevBtn && prevBtn.addEventListener('click', ()=> show(Math.max(idx-1,0)));
+            nextBtn && nextBtn.addEventListener('click', ()=> show(Math.min(idx+1,images.length-1)));
+            dots.forEach((d,di)=>d.addEventListener('click', ()=>show(di)));
+          }
         }, 0);
 
         const button = card.querySelector("button[aria-label^='Add']");
