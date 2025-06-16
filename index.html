@@ -932,8 +932,7 @@ const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyR6Xrd93D
     const url = `https://wa.me/918977659800?text=Hello! I'm interested in these items:%0A%0A${productLines}%0A%0A🧾 Total: ₹${total.toFixed(2)}`;
 
     // Send a single POST request with all user details and the entire cart array, FLATTENED for Google Sheets
-    await fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
-      method: "POST",
+    await fetch("https://script.google.com/macros/s/AKfycbyR6Xrd93DwH3xgE4g4nq3WERPBWgdHh3vwgQItEY_jPvn-MoVStNI8EGxJfeoRFGzi5w/exec", {      method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
