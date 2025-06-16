@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -11,14 +11,6 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <!-- Google Fonts for a modern look -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Google Analytics (gtag.js) - Replace G-XXXXXXXXXX with your own ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
   <style>
     :root {
       --pink: #ffd6ff;
@@ -695,7 +687,6 @@
     cartCount.innerText = `🛒 (${total})`;
   }
 
-  // Editable cart popup
   function renderCartPopup() {
     if (cart.length === 0) {
       cartItemsList.innerHTML = "<p style='text-align:center; color:#888; margin:14px 0;'>Your cart is empty.</p>";
@@ -726,7 +717,6 @@
       cartTotalRow.innerHTML = `<div class="cart-total-row"><span>Total:</span><span>₹${total.toFixed(2)}</span></div>`;
       cartBuyNowBtn.style.display = "block";
       setTimeout(() => {
-        // Remove product
         cartItemsList.querySelectorAll('.cartRemoveBtn').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const idx = Number(btn.getAttribute('data-idx'));
@@ -735,7 +725,6 @@
             renderCartPopup();
           });
         });
-        // Increase qty
         cartItemsList.querySelectorAll('.cartPlusBtn').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const idx = Number(btn.getAttribute('data-idx'));
@@ -744,7 +733,6 @@
             renderCartPopup();
           });
         });
-        // Decrease qty
         cartItemsList.querySelectorAll('.cartMinusBtn').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const idx = Number(btn.getAttribute('data-idx'));
@@ -930,6 +918,12 @@
       return sum + (priceNum * item.qty);
     }, 0);
 
+    // Flatten cart data for Google Sheets
+    const productNames = cart.map(p => p.name).join(', ');
+    const productIds = cart.map(p => p.id).join(', ');
+    const productQtys = cart.map(p => p.qty).join(', ');
+    const productPrices = cart.map(p => (typeof p.price === "number" ? p.price : ((""+p.price).replace(/,/g,"").match(/(\d+(\.\d+)?)/)?.[1] || ""))).join(', ');
+
     const productLines = cart.map((p, i) => {
       let priceText = typeof p.price === "number" ? `₹${p.price}` : p.price;
       return `Product ${i+1}:\n🆔 ID: ${p.id}\n📦 Name: ${p.name}\n💰 Price: ${priceText}\nQty: ${p.qty}`;
@@ -938,7 +932,7 @@
     // WhatsApp message: only products and total, not user details
     const url = `https://wa.me/918977659800?text=Hello! I'm interested in these items:%0A%0A${productLines}%0A%0A🧾 Total: ₹${total.toFixed(2)}`;
 
-    // Send a single POST request with all user details and the entire cart array
+    // Send a single POST request with all user details and the entire cart array, FLATTENED for Google Sheets
     await fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
       method: "POST",
       mode: "no-cors",
@@ -949,7 +943,13 @@
         email,
         phone,
         pin,
-        cart // send the whole cart array as a single field
+        productNames,
+        productIds,
+        productQtys,
+        productPrices,
+        total: total.toFixed(2),
+        // For reference, include the full cart JSON (optional)
+        cart: JSON.stringify(cart)
       })
     });
 
