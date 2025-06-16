@@ -11,6 +11,14 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <!-- Google Fonts for a modern look -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Google Analytics (gtag.js) - Replace G-XXXXXXXXXX with your own ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
   <style>
     :root {
       --pink: #ffd6ff;
@@ -82,8 +90,8 @@
       padding: 4px 12px;
       border-radius: 16px;
       transition: background var(--transition);
+      cursor: pointer;
     }
-    /* Hero Section */
     #landing-page {
       min-height: 88vh;
       display: flex;
@@ -400,7 +408,6 @@
       color: #333;
       outline: none;
     }
-    /* SLIDER STYLES */
     .product-image-slider {
       width: 100%;
       max-width: 230px;
@@ -622,6 +629,7 @@
   const interestForm = document.getElementById("interestForm");
 
   let cart = [];
+  let cartForBuyNow = null; // for single-product buy
 
   // Product API
   const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwnmidz7K_97QxeXAoMHKp0NMVbDWg0KQoLqtxk6wiAY4ldVGLWFxyIjhfRif9ItxtH/exec";
@@ -638,6 +646,18 @@
 
   // Accessibility: hide popup on start
   popupForm.style.display = "none";
+
+  // Helper: find cart item index by id
+  function findCartIndex(id) {
+    return cart.findIndex(item => item.id === id);
+  }
+
+  // Update cart count at top
+  function updateCartCount() {
+    const total = cart.reduce((sum, item) => sum + item.qty, 0);
+    cartCount.innerText = `🛒 (${total})`;
+    buyNowBtn.style.display = total > 0 ? "block" : "none";
+  }
 
   // Fetch products
   fetch(GOOGLE_SHEET_API_URL)
@@ -685,7 +705,13 @@
           </div>
           <h3>${p.name}</h3>
           <p>Price: <b>${p.price}</b></p>
-          <button type="button" aria-label="Add ${p.name} to cart">Add to Cart</button>
+          <div style="margin-bottom: 12px;">
+            <button type="button" class="minusQty" aria-label="Decrease quantity" style="font-size:1.2rem;padding:2px 10px;">-</button>
+            <span class="qtyDisplay" style="margin: 0 10px; font-size:1.1rem;">1</span>
+            <button type="button" class="plusQty" aria-label="Increase quantity" style="font-size:1.2rem;padding:2px 10px;">+</button>
+          </div>
+          <button type="button" class="addToCartBtn" aria-label="Add ${p.name} to cart">Add to Cart</button>
+          <button type="button" class="buyNowSingleBtn" style="margin-top:10px;background:#5e548e;">Buy</button>
         `;
 
         // Slider logic
@@ -711,14 +737,48 @@
           }
         }, 0);
 
-        const button = card.querySelector("button[aria-label^='Add']");
-        button.addEventListener("click", () => {
-          cart.push({ id: p.id, name: p.name, price: p.price, image: images[0] });
-          buyNowBtn.style.display = "block";
-          cartCount.innerText = `🛒 (${cart.length})`;
-          button.innerText = "Added!";
-          button.disabled = true;
+        // Quantity logic
+        let qty = 1;
+        const minusBtn = card.querySelector('.minusQty');
+        const plusBtn = card.querySelector('.plusQty');
+        const qtyDisplay = card.querySelector('.qtyDisplay');
+        minusBtn.addEventListener('click', ()=>{
+          if(qty > 1) qty--;
+          qtyDisplay.textContent = qty;
         });
+        plusBtn.addEventListener('click', ()=>{
+          qty++;
+          qtyDisplay.textContent = qty;
+        });
+
+        // Add to Cart
+        const addToCartBtn = card.querySelector('.addToCartBtn');
+        addToCartBtn.addEventListener("click", () => {
+          const idx = findCartIndex(p.id);
+          if (idx !== -1) {
+            cart[idx].qty += qty;
+          } else {
+            cart.push({ id: p.id, name: p.name, price: p.price, image: images[0], qty });
+          }
+          updateCartCount();
+          addToCartBtn.innerText = "Added!";
+          addToCartBtn.disabled = true;
+          setTimeout(()=>{
+            addToCartBtn.innerText = "Add to Cart";
+            addToCartBtn.disabled = false;
+          }, 1200);
+          qty = 1;
+          qtyDisplay.textContent = qty;
+        });
+
+        // Buy Now for this product only
+        const buyNowSingleBtn = card.querySelector('.buyNowSingleBtn');
+        buyNowSingleBtn.addEventListener("click", () => {
+          cartForBuyNow = [{ id: p.id, name: p.name, price: p.price, image: images[0], qty }];
+          popupForm.style.display = "flex";
+          setTimeout(() => interestForm.querySelector("input").focus(), 180);
+        });
+
         container.appendChild(card);
       });
     })
@@ -728,19 +788,21 @@
       console.error("Error fetching products:", err);
     });
 
-  // Buy Now Button
+  // Buy Now Button (for all cart)
   buyNowBtn.onclick = () => {
     if (cart.length === 0) return alert("Cart is empty!");
+    cartForBuyNow = null; // use full cart
     popupForm.style.display = "flex";
     setTimeout(() => interestForm.querySelector("input").focus(), 180);
   };
 
   cancelBtn.onclick = () => {
     popupForm.style.display = "none";
+    cartForBuyNow = null;
   };
 
   // Form submission
-  interestForm.onsubmit = (e) => {
+  interestForm.onsubmit = async (e) => {
     e.preventDefault();
     const name = document.getElementById("custName").value.trim();
     const address = document.getElementById("custAddress").value.trim();
@@ -753,33 +815,41 @@
       return;
     }
 
-    cart.forEach(item => {
-      fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, address, email, phone, productId: item.id, productName: item.name })
-      });
-    });
+    const checkoutProducts = cartForBuyNow || cart;
+    await Promise.all(
+      checkoutProducts.map(item =>
+        fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, address, email, phone, productId: item.id, productName: item.name, qty: item.qty })
+        })
+      )
+    );
 
-    const message = cart.map(p => `🆔 ${p.id}\n📦 ${p.name}\n💰 ${p.price}`).join('%0A%0A');
+    const message = checkoutProducts.map(p => `🆔 ${p.id}\n📦 ${p.name}\n💰 ${p.price}\nQty: ${p.qty}`).join('%0A%0A');
     const url = `https://wa.me/918977659800?text=Hello! I'm interested in these items:%0A%0A${message}`;
     window.location.href = url;
 
     popupForm.style.display = "none";
     interestForm.reset();
-    cart = [];
-    cartCount.innerText = `🛒 (0)`;
-    buyNowBtn.style.display = "none";
+    if (!cartForBuyNow) {
+      cart = [];
+      updateCartCount();
+      buyNowBtn.style.display = "none";
+    }
+    cartForBuyNow = null;
   };
 
   // Keyboard accessibility for popup ESC close
   window.addEventListener("keydown", (e) => {
     if (popupForm.style.display === "flex" && e.key === "Escape") {
       popupForm.style.display = "none";
+      cartForBuyNow = null;
     }
   });
 })();
 </script>
 </body>
 </html>
+
