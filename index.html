@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -533,7 +533,6 @@
       #interestForm { padding: 16px 7px 14px 7px; }
       .hero-title { font-size: 1.24rem; }
     }
-    /* Cart buy now button style in popup */
     #cartBuyNowBtn {
       background: var(--highlight);
       color: #fff;
@@ -936,19 +935,23 @@
       return `Product ${i+1}:\n🆔 ID: ${p.id}\n📦 Name: ${p.name}\n💰 Price: ${priceText}\nQty: ${p.qty}`;
     }).join('%0A%0A');
 
-    // Removed personal details from WhatsApp message, only products and total
+    // WhatsApp message: only products and total, not user details
     const url = `https://wa.me/918977659800?text=Hello! I'm interested in these items:%0A%0A${productLines}%0A%0A🧾 Total: ₹${total.toFixed(2)}`;
 
-    await Promise.all(
-      cart.map(item =>
-        fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, address, email, phone, pin, productId: item.id, productName: item.name, qty: item.qty })
-        })
-      )
-    );
+    // Send a single POST request with all user details and the entire cart array
+    await fetch("https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        address,
+        email,
+        phone,
+        pin,
+        cart // send the whole cart array as a single field
+      })
+    });
 
     window.location.href = url;
 
