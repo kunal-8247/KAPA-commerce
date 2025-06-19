@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="index, follow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KAAP Commerce creates personalized, handcrafted resin keychains, jewelry, and gifts — perfect for birthdays, anniversaries, and special moments.">
+  <meta name="keywords" content="gifts, resin keychains, personalized gifts, KAAP Commerce" />
+  <meta name="author" content="KAAP Commerce Team" />
+  <meta name="google-site-verification" content="oMOoPCP2rVTdlil-FA-hmLcm2ZgeMgjXBdIepu9C0Gg" />
+  <title>KAAP Commerce | Handcrafted Resin Gifts, Jewelry & More</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <!-- Google Fonts for a modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="logo"><img src="images/kaap-logo.jpg" alt="KAAP Commerce Logo" /></div>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="#landing-page">Home</a>
+    <a href="#products">Products</a>
+    <a href="#upcoming">Upcoming</a>
+    <a href="#about">About</a>
+    <a href="#vision">Vision</a>
+    <span id="cartCount" aria-label="Shopping cart" tabindex="0" style="cursor:pointer;">🛒 (0)</span>
+  </nav>
+</header>
+
+<!-- Cart Popup -->
+<div id="cartPopup" style="display:none; position:fixed; top:70px; right:20px; background:#fff; border-radius:14px; box-shadow:0 8px 32px rgba(94,84,142,0.13); z-index:2000; min-width:260px; max-width:98vw; padding:18px 12px 14px 12px;">
+  <h3 style="margin-top:0; color:#5e548e; font-size:1.1rem; text-align:center;">Your Cart</h3>
+  <div id="cartItemsList"></div>
+  <div id="cartTotalRow"></div>
+  <button id="cartBuyNowBtn" style="display:none;">Buy Now</button>
+  <button id="closeCartPopup" style="margin:12px auto 0 auto; display:block; background:#eee; color:#555; border:none; border-radius:8px; padding:6px 18px; cursor:pointer;">Close</button>
+</div>
+
+<main>
+<section id="landing-page">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">
+      Surprise &amp; Delight<br>
+      <span style="font-weight:900;">with Gifts for Loved Ones</span>
+    </h1>
+    <p class="hero-subtitle">Thoughtful, personalized creations for every occasion.<br>
+      <b>KAAP Commerce</b> helps you make every moment extra special.
+    </p>
+    <a href="#products" class="shop-button" aria-label="Shop Now">Shop Now</a>
+  </div>
+</section>
+
+<section id="products">
+  <h2 class="section-title">Featured Products</h2>
+  <p class="byline">Curated by KAAP Commerce</p>
+  <div class="products-container" id="productList">
+    <span class="loader" id="productLoader"></span>
+  </div>
+</section>
+
+<section id="upcoming">
+  <h2 class="section-title">Future Upcoming</h2>
+  <p class="byline">Jewellery by Pravallika</p>
+  <div class="products-container">
+    <div class="product-card coming-soon" tabindex="0" aria-label="Upcoming Jewellery Collection">
+      <img src="images/coming-soon.jpg" alt="Upcoming Jewellery Collection" />
+      <h3>Coming Soon</h3>
+      <p>Elegant jewellery launching soon!</p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 class="section-title">About Us</h2>
+  <p style="text-align:center; max-width:600px; margin:0 auto;">
+    KAAP Commerce is a young, passionate brand providing unique gifts for all occasions.
+  </p>
+</section>
+
+<section id="vision">
+  <h2 class="section-title">Our Vision &amp; Motto</h2>
+  <p style="text-align:center; max-width:600px; margin:0 auto;">
+    Our vision is to empower creativity and bring smiles through meaningful gifts.<br>
+    <strong>Motto:</strong> “Create. Celebrate. Cherish.”
+  </p>
+</section>
+</main>
+
+<footer>
+  &copy; 2025 KAAP Commerce. All rights reserved.
+</footer>
+
+<!-- Popup Form -->
+<div id="popupForm" aria-modal="true" role="dialog">
+  <form id="interestForm" autocomplete="on">
+    <h3>Your Details</h3>
+    <input type="text" id="custName" placeholder="Your Name" required aria-label="Your Name" />
+    <input type="text" id="custAddress" placeholder="Your Address" required aria-label="Your Address" />
+    <input type="email" id="custEmail" placeholder="Your Email" required aria-label="Your Email" />
+    <input type="tel" id="custPhone" placeholder="WhatsApp Number" required aria-label="WhatsApp Number" />
+    <input type="text" id="custPin" placeholder="PIN Code (6 digits)" pattern="\d{6}" maxlength="6" required aria-label="PIN Code" />
+    <button type="submit">Submit &amp; Go to WhatsApp</button>
+    <button type="button" id="cancelBtn">Cancel</button>
+  </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
