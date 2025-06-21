@@ -106,5 +106,23 @@
 </div>
 
 <script src="script.js"></script>
+  <!-- Product Detail Modal -->
+<div id="productDetailModal" style="display:none;">
+  <div class="product-detail-content">
+    <button id="detailBackBtn" aria-label="Back to products">← Back</button>
+    <div class="detail-slider-container">
+      <div id="detailSliderWrapper"></div>
+    </div>
+    <h3 id="detailProductName"></h3>
+    <div id="detailDescription" style="margin-bottom: 12px;"></div>
+    <div class="qty-controls">
+      <button id="detailMinusQty">-</button>
+      <span id="detailQtyDisplay">1</span>
+      <button id="detailPlusQty">+</button>
+    </div>
+    <button id="detailAddToCartBtn">Add to Cart</button>
+    <button id="detailBuyNowBtn">Buy Now</button>
+  </div>
+</div>
 </body>
 </html>
