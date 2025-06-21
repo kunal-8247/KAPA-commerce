@@ -13,6 +13,19 @@
 
   let cart = [];
   let cartForBuyNow = null;
+  const productDetailModal = document.getElementById("productDetailModal");
+const detailBackBtn = document.getElementById("detailBackBtn");
+const detailSliderWrapper = document.getElementById("detailSliderWrapper");
+const detailProductName = document.getElementById("detailProductName");
+const detailDescription = document.getElementById("detailDescription");
+const detailQtyDisplay = document.getElementById("detailQtyDisplay");
+const detailAddToCartBtn = document.getElementById("detailAddToCartBtn");
+const detailBuyNowBtn = document.getElementById("detailBuyNowBtn");
+const detailMinusQty = document.getElementById("detailMinusQty");
+const detailPlusQty = document.getElementById("detailPlusQty");
+
+let currentDetailProduct = null;
+let detailQty = 1;
 const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwiop-0vUy39Qjh18PRLqoKW09_aNZq1rW0MgtJl4rn1RoxTAgFyaz2SoycfEpbzyldpA/exec";  function parseToArray(val) {
     if (!val) return [];
     if (typeof val === "string") {
@@ -137,6 +150,31 @@ const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwiop-0vUy
         const card = document.createElement("div");
         card.className = "product-card";
         card.tabIndex = 0;
+        card.addEventListener("click", (e) => {
+  if (e.target.closest("button")) return; // Ignore clicks on buttons
+  currentDetailProduct = p;
+  detailQty = 1;
+  detailQtyDisplay.textContent = "1";
+
+  // Set product name
+  detailProductName.textContent = p.name;
+
+  // Set product description(s)
+  const descriptions = parseToArray(p.descriptions || p.description);
+  detailDescription.innerHTML = descriptions.map(d => `<p>${d}</p>`).join("");
+
+  // Load images into slider
+  const images = parseToArray(p.images || p.image);
+  detailSliderWrapper.innerHTML = images.map((img, i) => `
+    <div style="margin-bottom:10px;">
+      <img src="${img}" alt="${p.name} Image ${i+1}" style="width:100%; border-radius:8px;" />
+      ${descriptions[i] ? `<p style="font-size:0.9rem; text-align:center; color:#666;">${descriptions[i]}</p>` : ""}
+    </div>
+  `).join("");
+
+  productDetailModal.style.display = "block";
+});
+        
         const hasMultiple = images.length > 1;
         let sliderImagesHtml = '';
         for (let j = 0; j < images.length; j++) {
@@ -232,6 +270,54 @@ const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwiop-0vUy
       container.innerHTML = "<p style='color:#e55b51'>Failed to load products. Please try again later.</p>";
       console.error("Error fetching products:", err);
     });
+  // Detail modal controls
+detailBackBtn.onclick = () => {
+  productDetailModal.style.display = "none";
+};
+
+detailMinusQty.onclick = () => {
+  if (detailQty > 1) detailQty--;
+  detailQtyDisplay.textContent = detailQty;
+};
+detailPlusQty.onclick = () => {
+  detailQty++;
+  detailQtyDisplay.textContent = detailQty;
+};
+
+detailAddToCartBtn.onclick = () => {
+  if (!currentDetailProduct) return;
+  const idx = findCartIndex(currentDetailProduct.id);
+  const images = parseToArray(currentDetailProduct.images || currentDetailProduct.image);
+  if (idx !== -1) {
+    cart[idx].qty += detailQty;
+  } else {
+    cart.push({
+      id: currentDetailProduct.id,
+      name: currentDetailProduct.name,
+      price: currentDetailProduct.price,
+      image: images[0],
+      qty: detailQty
+    });
+  }
+  updateCartCount();
+  alert("Item added to cart!");
+  productDetailModal.style.display = "none";
+};
+
+detailBuyNowBtn.onclick = () => {
+  if (!currentDetailProduct) return;
+  cart = [{
+    id: currentDetailProduct.id,
+    name: currentDetailProduct.name,
+    price: currentDetailProduct.price,
+    image: parseToArray(currentDetailProduct.images || currentDetailProduct.image)[0],
+    qty: detailQty
+  }];
+  updateCartCount();
+  productDetailModal.style.display = "none";
+  popupForm.style.display = "flex";
+  setTimeout(() => interestForm.querySelector("input").focus(), 180);
+};
 
   cancelBtn.onclick = () => {
     popupForm.style.display = "none";
