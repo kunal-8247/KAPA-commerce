@@ -190,7 +190,6 @@
   let cart = [];
   let cartForBuyNow = null;
 
-  // Correct API URLs as per your mapping
   const PRODUCT_API_URL = "https://script.google.com/macros/s/AKfycbwiop-0vUy39Qjh18PRLqoKW09_aNZq1rW0MgtJl4rn1RoxTAgFyaz2SoycfEpbzyldpA/exec";
   const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTNnPO7YkA-QdA4uQBTAMsDgW0crnFGnK1L0xuyaPn2axoyV1O3gXkjPitXmJ4Z89_9A/exec";
 
@@ -314,47 +313,48 @@
     productViewModal.style.display = "none";
   };
 
-  // ---- MAIN PRODUCT FETCH & CATEGORY RENDER ----
-
+  // --- Fetch and Render Products with Category Detection (including RS for Resin Work) ---
   fetch(PRODUCT_API_URL)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error("Network response was not ok: " + res.status);
+      return res.json();
+    })
     .then(products => {
       loader && loader.remove();
-      if (!products.length) {
+      if (!Array.isArray(products) || !products.length) {
         container.innerHTML = "<p style='color:#e55b51'>No products available at the moment.</p>";
         return;
       }
 
-      // Categorize products by ID suffix
-      const resinProducts = products.filter(p => p.id && p.id.endsWith("RS"));
-      const watchProducts = products.filter(p => p.id && p.id.endsWith("WT"));
-      const chocolateProducts = products.filter(p => p.id && p.id.endsWith("CH"));
-      const jewelleryProducts = products.filter(p => p.id && p.id.endsWith("JW"));
-      const neonProducts = products.filter(p => p.id && p.id.endsWith("NL"));
-      const otherProducts = products.filter(p =>
-        (!p.id || (!p.id.endsWith("RS") && !p.id.endsWith("WT") && !p.id.endsWith("CH") && !p.id.endsWith("JW") && !p.id.endsWith("NL")))
-      );
+      // Categorize products by ID suffix (including RS for Resin Work)
+      const categories = {
+        "WT": { name: "Watches", prods: [] },
+        "CH": { name: "Chocolates", prods: [] },
+        "JW": { name: "Jewellery", prods: [] },
+        "NL": { name: "Neon Light", prods: [] },
+        "RS": { name: "Resin Work", prods: [] },
+        "other": { name: "Other", prods: [] }
+      };
 
-      const categories = [
-        { name: "Resin Work", products: resinProducts },
-        { name: "Watches", products: watchProducts },
-        { name: "Chocolates", products: chocolateProducts },
-        { name: "Jewellery", products: jewelleryProducts },
-        { name: "Neon Lights", products: neonProducts },
-        { name: "Other Gifts", products: otherProducts }
-      ];
+      products.forEach(p => {
+        let cat = "other";
+        if (typeof p.id === "string" && p.id.length >= 2) {
+          const suffix = p.id.slice(-2).toUpperCase();
+          if (categories[suffix]) cat = suffix;
+        }
+        categories[cat].prods.push(p);
+      });
 
-      // Helper to create a category section
-      function createCategorySection(title, prodList) {
-        if (!prodList.length) return "";
+      container.innerHTML = "";
+      Object.values(categories).forEach(cat => {
+        if (!cat.prods.length) return;
         const section = document.createElement("div");
         section.className = "product-category-section";
-        section.innerHTML = `
-          <div class="product-category-title">${title}</div>
-          <div class="products-container"></div>
-        `;
+        section.innerHTML = `<div class="product-category-title">${cat.name}</div>
+          <div class="products-container"></div>`;
         const prodContainer = section.querySelector(".products-container");
-        prodList.forEach((p, i) => {
+
+        cat.prods.forEach((p, i) => {
           const images = parseToArray(p.images || p.image);
           const descriptions = parseToArray(p.descriptions || p.description);
 
@@ -370,7 +370,7 @@
               </div>
             `;
           }
-          const sliderId = `slider-${title.replace(/\s/g, '')}-${i}-${Date.now()}`;
+          const sliderId = `slider-${cat.name}-${i}-${Date.now()}`;
           card.innerHTML = `
             <div class="product-image-slider" id="${sliderId}">
               ${hasMultiple ? `<button class="slider-nav-btn slider-prev" style="display:none" aria-label="Previous image">&#8592;</button>` : ''}
@@ -393,10 +393,9 @@
             <button type="button" class="addToCartBtn" aria-label="Add ${p.name} to cart">Add to Cart</button>
           `;
 
-          // Append the card to DOM first
           prodContainer.appendChild(card);
 
-          // Now setup slider logic
+          // Slider logic
           const slider = card.querySelector(`#${sliderId}`);
           if (slider) {
             const wrapper = slider.querySelector('.slider-images-wrapper');
@@ -418,7 +417,6 @@
             }
           }
 
-          // Quantity controls
           let qty = 1;
           const minusBtn = card.querySelector('.minusQty');
           const plusBtn = card.querySelector('.plusQty');
@@ -484,7 +482,9 @@
               `;
             }
             function renderModalContent() {
-              document.getElementById("productViewBody").innerHTML = modalSliderHtml();
+              const viewBody = document.getElementById("productViewBody");
+              if (!viewBody) return;
+              viewBody.innerHTML = modalSliderHtml();
               // Next/Prev listeners
               if (images.length > 1) {
                 let prevBtn = document.getElementById("pvPrev");
@@ -540,17 +540,9 @@
             }
           });
         });
-        return section;
-      }
-
-      // Clear any previous content
-      container.innerHTML = "";
-
-      categories.forEach(cat => {
-        if (cat.products && cat.products.length) {
-          container.appendChild(createCategorySection(cat.name, cat.products));
-        }
+        container.appendChild(section);
       });
+
     })
     .catch(err => {
       loader && loader.remove();
