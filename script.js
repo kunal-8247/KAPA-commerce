@@ -554,6 +554,7 @@
     popupForm.style.display = "none";
   };
 
+  // --- FIXED FORM SUBMISSION HANDLER FOR GOOGLE SHEETS ---
   interestForm.onsubmit = async (e) => {
     e.preventDefault();
     const name = document.getElementById("custName").value.trim();
@@ -571,7 +572,6 @@
       return;
     }
 
-    // Always show full cart in WhatsApp message
     let cartTotal = cart.reduce((sum, item) => {
       let priceNum = 0;
       if (typeof item.price === "number") priceNum = item.price;
@@ -585,10 +585,8 @@
       let priceText = typeof p.price === "number" ? `₹${p.price}` : p.price;
       return `Product ${i+1}:\n🆔 ID: ${p.id}\n📦 Name: ${p.name}\n💰 Price: ${priceText}\nQty: ${p.qty}`;
     }).join('%0A%0A');
-
     const whatsappUrlAfterForm = `https://wa.me/918977659800?text=Hello! I'm interested in these items:%0A%0A${productLines}%0A%0A🧾 Total: ₹${cartTotal.toFixed(2)}`;
 
-    // For Google Sheets, only send single product if cartForBuyNow is set (else whole cart)
     const sendCart = cartForBuyNow ? [cartForBuyNow] : cart;
     let totalForSheet = sendCart.reduce((sum, item) => {
       let priceNum = 0;
@@ -606,23 +604,25 @@
     const productQtys = sendCart.map(p => p.qty).join(', ');
     const productPrices = sendCart.map(p => (typeof p.price === "number" ? p.price : ((""+p.price).replace(/,/g,"").match(/(\d+(\.\d+)?)/)?.[1] || ""))).join(', ');
 
-    await fetch(GOOGLE_SHEET_API_URL, {      
+    // Build form-urlencoded body
+    const sheetData = new URLSearchParams({
+      name,
+      address,
+      email,
+      phone,
+      pin,
+      productNames,
+      productIds,
+      productQtys,
+      productPrices,
+      total: totalForSheet.toFixed(2),
+      cart: JSON.stringify(sendCart)
+    });
+
+    await fetch(GOOGLE_SHEET_API_URL, {
       method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        address,
-        email,
-        phone,
-        pin,
-        productNames,
-        productIds,
-        productQtys,
-        productPrices,
-        total: totalForSheet.toFixed(2),
-        cart: JSON.stringify(sendCart)
-      })
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: sheetData
     });
 
     // DIRECTLY REDIRECT TO WHATSAPP
