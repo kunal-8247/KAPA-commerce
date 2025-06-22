@@ -554,7 +554,6 @@
     popupForm.style.display = "none";
   };
 
-  // --- FIXED FORM SUBMISSION HANDLER FOR GOOGLE SHEETS ---
   interestForm.onsubmit = async (e) => {
     e.preventDefault();
     const name = document.getElementById("custName").value.trim();
@@ -604,25 +603,23 @@
     const productQtys = sendCart.map(p => p.qty).join(', ');
     const productPrices = sendCart.map(p => (typeof p.price === "number" ? p.price : ((""+p.price).replace(/,/g,"").match(/(\d+(\.\d+)?)/)?.[1] || ""))).join(', ');
 
-    // Build form-urlencoded body
-    const sheetData = new URLSearchParams({
-      name,
-      address,
-      email,
-      phone,
-      pin,
-      productNames,
-      productIds,
-      productQtys,
-      productPrices,
-      total: totalForSheet.toFixed(2),
-      cart: JSON.stringify(sendCart)
-    });
-
     await fetch(GOOGLE_SHEET_API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: sheetData
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        address,
+        email,
+        phone,
+        pin,
+        productNames,
+        productIds,
+        productQtys,
+        productPrices,
+        total: totalForSheet.toFixed(2),
+        cart: JSON.stringify(sendCart)
+      })
     });
 
     // DIRECTLY REDIRECT TO WHATSAPP
