@@ -1,5 +1,5 @@
 (() => {
-  const container = document.getElementById("productList");
+  const container = document.getElementById("productCategories"); // changed from productList
   const loader = document.getElementById("productLoader");
   const cartCount = document.getElementById("cartCount");
   const popupForm = document.getElementById("popupForm");
@@ -314,6 +314,8 @@
     productViewModal.style.display = "none";
   };
 
+  // ---- MAIN PRODUCT FETCH & CATEGORY RENDER ----
+
   fetch(PRODUCT_API_URL)
     .then(res => res.json())
     .then(products => {
@@ -322,189 +324,231 @@
         container.innerHTML = "<p style='color:#e55b51'>No products available at the moment.</p>";
         return;
       }
-      products.forEach((p, i) => {
-        const images = parseToArray(p.images || p.image);
-        const descriptions = parseToArray(p.descriptions || p.description);
 
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.tabIndex = 0;
-        const hasMultiple = images.length > 1;
-        let sliderImagesHtml = '';
-        for (let j = 0; j < images.length; j++) {
-          sliderImagesHtml += `
-            <div class="slider-image-single">
-              <img src="${images[j]}" alt="${p.name}" />
-            </div>
-          `;
-        }
-        const sliderId = `slider-${i}-${Date.now()}`;
-        card.innerHTML = `
-          <div class="product-image-slider" id="${sliderId}">
-            ${hasMultiple ? `<button class="slider-nav-btn slider-prev" style="display:none" aria-label="Previous image">&#8592;</button>` : ''}
-            <div class="slider-images-wrapper">
-              ${sliderImagesHtml}
-            </div>
-            ${hasMultiple ? `<button class="slider-nav-btn slider-next" aria-label="Next image">&#8594;</button>` : ''}
-            <div class="slider-dots"${hasMultiple ? '' : ' style="display:none;"'}>
-              ${images.map((_,idx)=>
-                `<button class="slider-dot${idx===0?' active':''}" data-idx="${idx}" aria-label="Go to image ${idx+1}"></button>`).join('')}
-            </div>
-          </div>
-          <h3>${p.name}</h3>
-          <p>Price: <b>${p.price}</b></p>
-          <div style="margin-bottom: 12px;">
-            <button type="button" class="minusQty" aria-label="Decrease quantity" style="font-size:1.2rem;padding:2px 10px;">-</button>
-            <span class="qtyDisplay" style="margin: 0 10px; font-size:1.1rem;">1</span>
-            <button type="button" class="plusQty" aria-label="Increase quantity" style="font-size:1.2rem;padding:2px 10px;">+</button>
-          </div>
-          <button type="button" class="addToCartBtn" aria-label="Add ${p.name} to cart">Add to Cart</button>
+      // Categorize products by ID suffix
+      const resinProducts = products.filter(p => p.id && p.id.endsWith("RS"));
+      const watchProducts = products.filter(p => p.id && p.id.endsWith("WT"));
+      const chocolateProducts = products.filter(p => p.id && p.id.endsWith("CH"));
+      const jewelleryProducts = products.filter(p => p.id && p.id.endsWith("JW"));
+      const neonProducts = products.filter(p => p.id && p.id.endsWith("NL"));
+      const otherProducts = products.filter(p =>
+        (!p.id || (!p.id.endsWith("RS") && !p.id.endsWith("WT") && !p.id.endsWith("CH") && !p.id.endsWith("JW") && !p.id.endsWith("NL")))
+      );
+
+      const categories = [
+        { name: "Resin Work", products: resinProducts },
+        { name: "Watches", products: watchProducts },
+        { name: "Chocolates", products: chocolateProducts },
+        { name: "Jewellery", products: jewelleryProducts },
+        { name: "Neon Lights", products: neonProducts },
+        { name: "Other Gifts", products: otherProducts }
+      ];
+
+      // Helper to create a category section
+      function createCategorySection(title, prodList) {
+        if (!prodList.length) return "";
+        const section = document.createElement("div");
+        section.className = "product-category-section";
+        section.innerHTML = `
+          <div class="product-category-title">${title}</div>
+          <div class="products-container"></div>
         `;
+        const prodContainer = section.querySelector(".products-container");
+        prodList.forEach((p, i) => {
+          // The following is the same as your original card logic, only now appended to prodContainer
+          const images = parseToArray(p.images || p.image);
+          const descriptions = parseToArray(p.descriptions || p.description);
 
-        setTimeout(() => {
-          const slider = card.querySelector(`#${sliderId}`);
-          if (!slider) return;
-          const wrapper = slider.querySelector('.slider-images-wrapper');
-          const prevBtn = slider.querySelector('.slider-prev');
-          const nextBtn = slider.querySelector('.slider-next');
-          const dots = Array.from(slider.querySelectorAll('.slider-dot'));
-          let idx = 0;
-          function show(idxToShow) {
-            idx = idxToShow;
-            wrapper.style.transform = `translateX(-${230*idx}px)`;
-            dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
-            if (prevBtn) prevBtn.style.display = idx === 0 ? 'none':'flex';
-            if (nextBtn) nextBtn.style.display = idx === images.length-1 ? 'none':'flex';
-          }
-          if (hasMultiple) {
-            prevBtn && prevBtn.addEventListener('click', ()=> show(Math.max(idx-1,0)));
-            nextBtn && nextBtn.addEventListener('click', ()=> show(Math.min(idx+1,images.length-1)));
-            dots.forEach((d,di)=>d.addEventListener('click', ()=>show(di)));
-          }
-        }, 0);
-
-        let qty = 1;
-        const minusBtn = card.querySelector('.minusQty');
-        const plusBtn = card.querySelector('.plusQty');
-        const qtyDisplay = card.querySelector('.qtyDisplay');
-        minusBtn.addEventListener('click', ()=>{
-          if(qty > 1) qty--;
-          qtyDisplay.textContent = qty;
-        });
-        plusBtn.addEventListener('click', ()=>{
-          qty++;
-          qtyDisplay.textContent = qty;
-        });
-
-        const addToCartBtn = card.querySelector('.addToCartBtn');
-        addToCartBtn.addEventListener("click", () => {
-          const idx = findCartIndex(p.id);
-          if (idx !== -1) {
-            cart[idx].qty += qty;
-          } else {
-            cart.push({ id: p.id, name: p.name, price: p.price, image: images[0], qty });
-          }
-          updateCartCount();
-          addToCartBtn.innerText = "Added!";
-          addToCartBtn.disabled = true;
-          setTimeout(()=>{
-            addToCartBtn.innerText = "Add to Cart";
-            addToCartBtn.disabled = false;
-          }, 1200);
-          qty = 1;
-          qtyDisplay.textContent = qty;
-        });
-
-        // -- PRODUCT VIEW MODAL --
-        function openProductViewModal() {
-          let imgIdx = 0;
-          let modalQty = 1;
-          function modalSliderHtml() {
-            return `
-              <div style="display:flex;flex-direction:column;align-items:center;">
-                <div style="position:relative;max-width:480px;width:100%;">
-                  ${images.length > 1 ? `<button type="button" class="pv-nav-btn pv-prev" id="pvPrev" aria-label="Previous image" style="${imgIdx===0?'display:none;':''}">&#8592;</button>` : ''}
-                  <img src="${images[imgIdx]}" alt="${p.name}">
-                  ${images.length > 1 ? `<button type="button" class="pv-nav-btn pv-next" id="pvNext" aria-label="Next image" style="${imgIdx===images.length-1?'display:none;':''}">&#8594;</button>` : ''}
-                </div>
-                <div class="pv-desc">
-                  ${descriptions[imgIdx] || ''}
-                </div>
-                <div style="margin-top:22px; text-align:left;max-width:700px;">
-                  <h2 style="margin-bottom:10px;">${p.name}</h2>
-                  <div style="font-size:1.25rem; margin-bottom:12px;"><b>Price:</b> <span style="color:#5e548e;font-weight:600;">${p.price}</span></div>
-                  ${p.moreDetails ? `<div style="margin-bottom:14px;"><b>Details:</b> ${p.moreDetails}</div>` : ''}
-                  <div class="pv-qty-row">
-                    <button type="button" id="pvMinusQty" aria-label="Decrease quantity">-</button>
-                    <span id="pvQtyDisplay">${modalQty}</span>
-                    <button type="button" id="pvPlusQty" aria-label="Increase quantity">+</button>
-                  </div>
-                  <div class="pv-btn-row">
-                    <button id="pvAddToCart">Add to Cart</button>
-                    <button id="pvBuyNow">Buy Now</button>
-                  </div>
-                </div>
+          const card = document.createElement("div");
+          card.className = "product-card";
+          card.tabIndex = 0;
+          const hasMultiple = images.length > 1;
+          let sliderImagesHtml = '';
+          for (let j = 0; j < images.length; j++) {
+            sliderImagesHtml += `
+              <div class="slider-image-single">
+                <img src="${images[j]}" alt="${p.name}" />
               </div>
             `;
           }
-          function renderModalContent() {
-            document.getElementById("productViewBody").innerHTML = modalSliderHtml();
-            // Next/Prev listeners
-            if (images.length > 1) {
-              let prevBtn = document.getElementById("pvPrev");
-              let nextBtn = document.getElementById("pvNext");
-              prevBtn && (prevBtn.onclick =()=>{ if(imgIdx>0){ imgIdx--; renderModalContent();}});
-              nextBtn && (nextBtn.onclick =()=>{ if(imgIdx<images.length-1){ imgIdx++; renderModalContent();}});
-            }
-            // Qty listeners
-            document.getElementById("pvMinusQty").onclick = () => {
-              if(modalQty>1){modalQty--;document.getElementById("pvQtyDisplay").textContent=modalQty;}
-            };
-            document.getElementById("pvPlusQty").onclick = () => {
-              modalQty++;document.getElementById("pvQtyDisplay").textContent=modalQty;
-            };
-            // Add to Cart
-            document.getElementById("pvAddToCart").onclick = () => {
-              const idx = findCartIndex(p.id);
-              if (idx !== -1) {
-                cart[idx].qty += modalQty;
-              } else {
-                cart.push({ id: p.id, name: p.name, price: p.price, image: images[0], qty: modalQty });
-              }
-              updateCartCount();
-              document.getElementById("pvAddToCart").innerText = "Added!";
-              document.getElementById("pvAddToCart").disabled = true;
-              setTimeout(()=>{
-                document.getElementById("pvAddToCart").innerText = "Add to Cart";
-                document.getElementById("pvAddToCart").disabled = false;
-              }, 1200);
-              modalQty = 1;
-              document.getElementById("pvQtyDisplay").textContent=modalQty;
-            };
-            // Buy Now
-            document.getElementById("pvBuyNow").onclick = () => {
-              cartForBuyNow = {
-                id: p.id, name: p.name, price: p.price, image: images[0], qty: modalQty
-              };
-              productViewModal.style.display = "none";
-              popupForm.style.display = "flex";
-              setTimeout(() => interestForm.querySelector("input").focus(), 180);
-            };
-          }
-          renderModalContent();
-          productViewModal.style.display = "flex";
-        }
-        card.addEventListener('click', function(e){
-          if (e.target.closest('.addToCartBtn') || e.target.closest('.minusQty') || e.target.closest('.plusQty')) return;
-          openProductViewModal();
-        });
-        card.addEventListener('keydown', function(e){
-          if (e.key === "Enter" || e.key === " " || e.keyCode === 13) {
-            openProductViewModal();
-          }
-        });
+          const sliderId = `slider-${title.replace(/\s/g, '')}-${i}-${Date.now()}`;
+          card.innerHTML = `
+            <div class="product-image-slider" id="${sliderId}">
+              ${hasMultiple ? `<button class="slider-nav-btn slider-prev" style="display:none" aria-label="Previous image">&#8592;</button>` : ''}
+              <div class="slider-images-wrapper">
+                ${sliderImagesHtml}
+              </div>
+              ${hasMultiple ? `<button class="slider-nav-btn slider-next" aria-label="Next image">&#8594;</button>` : ''}
+              <div class="slider-dots"${hasMultiple ? '' : ' style="display:none;"'}>
+                ${images.map((_,idx)=>
+                  `<button class="slider-dot${idx===0?' active':''}" data-idx="${idx}" aria-label="Go to image ${idx+1}"></button>`).join('')}
+              </div>
+            </div>
+            <h3>${p.name}</h3>
+            <p>Price: <b>${p.price}</b></p>
+            <div style="margin-bottom: 12px;">
+              <button type="button" class="minusQty" aria-label="Decrease quantity" style="font-size:1.2rem;padding:2px 10px;">-</button>
+              <span class="qtyDisplay" style="margin: 0 10px; font-size:1.1rem;">1</span>
+              <button type="button" class="plusQty" aria-label="Increase quantity" style="font-size:1.2rem;padding:2px 10px;">+</button>
+            </div>
+            <button type="button" class="addToCartBtn" aria-label="Add ${p.name} to cart">Add to Cart</button>
+          `;
 
-        container.appendChild(card);
+          setTimeout(() => {
+            const slider = card.querySelector(`#${sliderId}`);
+            if (!slider) return;
+            const wrapper = slider.querySelector('.slider-images-wrapper');
+            const prevBtn = slider.querySelector('.slider-prev');
+            const nextBtn = slider.querySelector('.slider-next');
+            const dots = Array.from(slider.querySelectorAll('.slider-dot'));
+            let idx = 0;
+            function show(idxToShow) {
+              idx = idxToShow;
+              wrapper.style.transform = `translateX(-${230*idx}px)`;
+              dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
+              if (prevBtn) prevBtn.style.display = idx === 0 ? 'none':'flex';
+              if (nextBtn) nextBtn.style.display = idx === images.length-1 ? 'none':'flex';
+            }
+            if (hasMultiple) {
+              prevBtn && prevBtn.addEventListener('click', ()=> show(Math.max(idx-1,0)));
+              nextBtn && nextBtn.addEventListener('click', ()=> show(Math.min(idx+1,images.length-1)));
+              dots.forEach((d,di)=>d.addEventListener('click', ()=>show(di)));
+            }
+          }, 0);
+
+          let qty = 1;
+          const minusBtn = card.querySelector('.minusQty');
+          const plusBtn = card.querySelector('.plusQty');
+          const qtyDisplay = card.querySelector('.qtyDisplay');
+          minusBtn.addEventListener('click', ()=>{
+            if(qty > 1) qty--;
+            qtyDisplay.textContent = qty;
+          });
+          plusBtn.addEventListener('click', ()=>{
+            qty++;
+            qtyDisplay.textContent = qty;
+          });
+
+          const addToCartBtn = card.querySelector('.addToCartBtn');
+          addToCartBtn.addEventListener("click", () => {
+            const idx = findCartIndex(p.id);
+            if (idx !== -1) {
+              cart[idx].qty += qty;
+            } else {
+              cart.push({ id: p.id, name: p.name, price: p.price, image: images[0], qty });
+            }
+            updateCartCount();
+            addToCartBtn.innerText = "Added!";
+            addToCartBtn.disabled = true;
+            setTimeout(()=>{
+              addToCartBtn.innerText = "Add to Cart";
+              addToCartBtn.disabled = false;
+            }, 1200);
+            qty = 1;
+            qtyDisplay.textContent = qty;
+          });
+
+          // -- PRODUCT VIEW MODAL (as before) --
+          function openProductViewModal() {
+            let imgIdx = 0;
+            let modalQty = 1;
+            function modalSliderHtml() {
+              return `
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                  <div style="position:relative;max-width:480px;width:100%;">
+                    ${images.length > 1 ? `<button type="button" class="pv-nav-btn pv-prev" id="pvPrev" aria-label="Previous image" style="${imgIdx===0?'display:none;':''}">&#8592;</button>` : ''}
+                    <img src="${images[imgIdx]}" alt="${p.name}">
+                    ${images.length > 1 ? `<button type="button" class="pv-nav-btn pv-next" id="pvNext" aria-label="Next image" style="${imgIdx===images.length-1?'display:none;':''}">&#8594;</button>` : ''}
+                  </div>
+                  <div class="pv-desc">
+                    ${descriptions[imgIdx] || ''}
+                  </div>
+                  <div style="margin-top:22px; text-align:left;max-width:700px;">
+                    <h2 style="margin-bottom:10px;">${p.name}</h2>
+                    <div style="font-size:1.25rem; margin-bottom:12px;"><b>Price:</b> <span style="color:#5e548e;font-weight:600;">${p.price}</span></div>
+                    ${p.moreDetails ? `<div style="margin-bottom:14px;"><b>Details:</b> ${p.moreDetails}</div>` : ''}
+                    <div class="pv-qty-row">
+                      <button type="button" id="pvMinusQty" aria-label="Decrease quantity">-</button>
+                      <span id="pvQtyDisplay">${modalQty}</span>
+                      <button type="button" id="pvPlusQty" aria-label="Increase quantity">+</button>
+                    </div>
+                    <div class="pv-btn-row">
+                      <button id="pvAddToCart">Add to Cart</button>
+                      <button id="pvBuyNow">Buy Now</button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }
+            function renderModalContent() {
+              document.getElementById("productViewBody").innerHTML = modalSliderHtml();
+              // Next/Prev listeners
+              if (images.length > 1) {
+                let prevBtn = document.getElementById("pvPrev");
+                let nextBtn = document.getElementById("pvNext");
+                prevBtn && (prevBtn.onclick =()=>{ if(imgIdx>0){ imgIdx--; renderModalContent();}});
+                nextBtn && (nextBtn.onclick =()=>{ if(imgIdx<images.length-1){ imgIdx++; renderModalContent();}});
+              }
+              // Qty listeners
+              document.getElementById("pvMinusQty").onclick = () => {
+                if(modalQty>1){modalQty--;document.getElementById("pvQtyDisplay").textContent=modalQty;}
+              };
+              document.getElementById("pvPlusQty").onclick = () => {
+                modalQty++;document.getElementById("pvQtyDisplay").textContent=modalQty;
+              };
+              // Add to Cart
+              document.getElementById("pvAddToCart").onclick = () => {
+                const idx = findCartIndex(p.id);
+                if (idx !== -1) {
+                  cart[idx].qty += modalQty;
+                } else {
+                  cart.push({ id: p.id, name: p.name, price: p.price, image: images[0], qty: modalQty });
+                }
+                updateCartCount();
+                document.getElementById("pvAddToCart").innerText = "Added!";
+                document.getElementById("pvAddToCart").disabled = true;
+                setTimeout(()=>{
+                  document.getElementById("pvAddToCart").innerText = "Add to Cart";
+                  document.getElementById("pvAddToCart").disabled = false;
+                }, 1200);
+                modalQty = 1;
+                document.getElementById("pvQtyDisplay").textContent=modalQty;
+              };
+              // Buy Now
+              document.getElementById("pvBuyNow").onclick = () => {
+                cartForBuyNow = {
+                  id: p.id, name: p.name, price: p.price, image: images[0], qty: modalQty
+                };
+                productViewModal.style.display = "none";
+                popupForm.style.display = "flex";
+                setTimeout(() => interestForm.querySelector("input").focus(), 180);
+              };
+            }
+            renderModalContent();
+            productViewModal.style.display = "flex";
+          }
+          card.addEventListener('click', function(e){
+            if (e.target.closest('.addToCartBtn') || e.target.closest('.minusQty') || e.target.closest('.plusQty')) return;
+            openProductViewModal();
+          });
+          card.addEventListener('keydown', function(e){
+            if (e.key === "Enter" || e.key === " " || e.keyCode === 13) {
+              openProductViewModal();
+            }
+          });
+
+          prodContainer.appendChild(card);
+        });
+        return section;
+      }
+
+      // Clear any previous content
+      container.innerHTML = "";
+
+      categories.forEach(cat => {
+        if (cat.products && cat.products.length) {
+          container.appendChild(createCategorySection(cat.name, cat.products));
+        }
       });
     })
     .catch(err => {
