@@ -1,5 +1,5 @@
 (() => {
-  const container = document.getElementById("productCategories"); // changed from productList
+  const container = document.getElementById("productCategories");
   const loader = document.getElementById("productLoader");
   const cartCount = document.getElementById("cartCount");
   const popupForm = document.getElementById("popupForm");
@@ -355,7 +355,6 @@
         `;
         const prodContainer = section.querySelector(".products-container");
         prodList.forEach((p, i) => {
-          // The following is the same as your original card logic, only now appended to prodContainer
           const images = parseToArray(p.images || p.image);
           const descriptions = parseToArray(p.descriptions || p.description);
 
@@ -394,9 +393,12 @@
             <button type="button" class="addToCartBtn" aria-label="Add ${p.name} to cart">Add to Cart</button>
           `;
 
-          setTimeout(() => {
-            const slider = card.querySelector(`#${sliderId}`);
-            if (!slider) return;
+          // Append the card to DOM first
+          prodContainer.appendChild(card);
+
+          // Now setup slider logic
+          const slider = card.querySelector(`#${sliderId}`);
+          if (slider) {
             const wrapper = slider.querySelector('.slider-images-wrapper');
             const prevBtn = slider.querySelector('.slider-prev');
             const nextBtn = slider.querySelector('.slider-next');
@@ -414,8 +416,9 @@
               nextBtn && nextBtn.addEventListener('click', ()=> show(Math.min(idx+1,images.length-1)));
               dots.forEach((d,di)=>d.addEventListener('click', ()=>show(di)));
             }
-          }, 0);
+          }
 
+          // Quantity controls
           let qty = 1;
           const minusBtn = card.querySelector('.minusQty');
           const plusBtn = card.querySelector('.plusQty');
@@ -448,7 +451,7 @@
             qtyDisplay.textContent = qty;
           });
 
-          // -- PRODUCT VIEW MODAL (as before) --
+          // -- PRODUCT VIEW MODAL --
           function openProductViewModal() {
             let imgIdx = 0;
             let modalQty = 1;
@@ -536,8 +539,6 @@
               openProductViewModal();
             }
           });
-
-          prodContainer.appendChild(card);
         });
         return section;
       }
